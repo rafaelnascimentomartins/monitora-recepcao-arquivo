@@ -46,6 +46,7 @@ public static class DependencyInjection
     private static void RegisterRepositories(this IServiceCollection services)
     {
         services.AddScoped<IArquivoRepository, ArquivoRepository>();
+        services.AddScoped<IEmpresaRepository, EmpresaRepository>();
         services.AddScoped<ILogErroRepository, LogErroRepository>();
     }
     private static void RegisterHandles(this IServiceCollection services)

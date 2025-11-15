@@ -138,4 +138,7 @@
   <data name="CampoTamanhoMaxInvalido" xml:space="preserve">
     <value>O campo {0} deve ter no máximo {1} caracteres.</value>
   </data>
+  <data name="CampoInvalido" xml:space="preserve">
+    <value>O campo {0} encontra-se o inválido.</value>
+  </data>
 </root>

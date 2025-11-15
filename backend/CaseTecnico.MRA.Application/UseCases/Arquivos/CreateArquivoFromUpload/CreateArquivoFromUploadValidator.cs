@@ -10,14 +10,22 @@ public class CreateArquivoFromUploadValidator : AbstractValidator<CreateArquivoF
     public CreateArquivoFromUploadValidator()
     {
         RuleFor(x => x.DataProcessamento)
-           .NotEmpty().WithMessage("Data de processamento é obrigatória.")
-           .Must(BeAValidDate).WithMessage("Data de processamento inválida.");
+           .NotEmpty().WithMessage(
+                string.Format(ValidationMessages.CampoInvalido, "Data processamento")
+            )
+           .Must(BeAValidDate).WithMessage(
+                string.Format(ValidationMessages.CampoInvalido, "Data processamento")
+            );
 
         RuleFor(x => x.PeriodoInicial)
-            .Must(BeAValidDateNullable).WithMessage("Período inicial inválido.");
+            .Must(BeAValidDateNullable).WithMessage(
+                string.Format(ValidationMessages.CampoInvalido, "Periodo inicial")
+            );
 
         RuleFor(x => x.PeriodoFinal)
-            .Must(BeAValidDateNullable).WithMessage("Período final inválido.");
+            .Must(BeAValidDateNullable).WithMessage(
+                string.Format(ValidationMessages.CampoInvalido, "Periodo final")
+            );
 
         RuleFor(x => x.Estabelecimento)
             .NotEmpty().WithMessage(string.Format(ValidationMessages.CampoObrigatorio, "Estabelecimento"))
@@ -26,9 +34,6 @@ public class CreateArquivoFromUploadValidator : AbstractValidator<CreateArquivoF
         RuleFor(x => x.Sequencia)
             .NotEmpty().WithMessage(string.Format(ValidationMessages.CampoObrigatorio, "Sequencia"))
             .MaximumLength(20).WithMessage(string.Format(ValidationMessages.CampoTamanhoMaxInvalido, "Sequencia", 20));
-
-        RuleFor(x => x.Empresa)
-            .NotEmpty().WithMessage("Empresa é obrigatória.");
 
         RuleFor(x => x.EstruturaImportada)
             .NotEmpty().WithMessage(string.Format(ValidationMessages.CampoObrigatorio, "EstruturaObject"))

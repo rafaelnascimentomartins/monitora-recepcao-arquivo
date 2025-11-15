@@ -54,11 +54,26 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public virtual Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public virtual Task<TEntity?> GetByIdAsNoTrackingAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return _dbSet
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Identificador == id, cancellationToken);
+    }
+
+    /// <summary>
+    /// Retorna todos os registros como Dictionary para busca rápida em memória.
+    /// </summary>
+    public virtual async Task<Dictionary<TKey, TEntity>> GetAsDictionaryAsync<TKey>(
+        Func<TEntity, TKey> keySelector,
+        CancellationToken cancellationToken = default)
+        where TKey : notnull
+    {
+        var list = await _dbSet
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return list.ToDictionary(keySelector);
     }
 }
 

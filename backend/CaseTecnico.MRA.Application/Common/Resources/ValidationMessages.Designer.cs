@@ -106,6 +106,15 @@ namespace CaseTecnico.MRA.Application.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O campo {0} encontra-se o inválido..
+        /// </summary>
+        internal static string CampoInvalido {
+            get {
+                return ResourceManager.GetString("CampoInvalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo {0} é obrigatório..
         /// </summary>
         internal static string CampoObrigatorio {

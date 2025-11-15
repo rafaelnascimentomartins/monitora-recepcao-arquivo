@@ -4,23 +4,26 @@ using CaseTecnico.MRA.Application.Common.Resources;
 using CaseTecnico.MRA.Domain.Entities;
 using CaseTecnico.MRA.Domain.Interfaces.Repositories;
 using FluentValidation;
-using Microsoft.VisualBasic;
 
 namespace CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
 
 public class CreateArquivoFromUploadHandler
 {
-    //private readonly IMapper _mapper;
-    private readonly IArquivoRepository _repository;
+    private readonly IMapper _mapper;
+    private readonly IArquivoRepository _arquivoRepo;
+    private readonly IEmpresaRepository _empresaRepo;
     private readonly IValidator<CreateArquivoFromUploadLineDto> _validator;
+    private Dictionary<string, Empresa>? empresasNoTrack;
 
     public CreateArquivoFromUploadHandler(
-        //IMapper mapper, 
-        IArquivoRepository repository,
+        IMapper mapper, 
+        IArquivoRepository arquivoRepo,
+        IEmpresaRepository empresaRepo,
         IValidator<CreateArquivoFromUploadLineDto> validator)
     {
-        //_mapper = mapper;
-        _repository = repository;
+        _mapper = mapper;
+        _arquivoRepo = arquivoRepo;
+        _empresaRepo = empresaRepo;
         _validator = validator;
     }
 
@@ -33,7 +36,7 @@ public class CreateArquivoFromUploadHandler
 
         var ext = Path.GetExtension(request.FileName).ToLower();
 
-        //VALIDAÇÕES CRUCIAIS PARA VERIFICAR ANTES DE LER LINHA POR LINHA.
+       //VALIDAÇÕES CRUCIAIS PARA VERIFICAR ANTES DE LER LINHA POR LINHA.
         if (!ext.Equals(".txt"))
         {
             response.Sucesso = false;
@@ -47,6 +50,11 @@ public class CreateArquivoFromUploadHandler
             response.Mensagens.Add(ValidationMessages.ArquivoImpSemInfo);
             return response;
         }
+
+
+        //BUSCANDO EMPRESAS NA BASE, PARA BUSCA DO IDENTIDICADOR
+        //NÃO POSSUI MUITAS EMPRESAS CADASTRADAS
+        empresasNoTrack = await _empresaRepo.GetAsDictionaryAsync(x => x.Descricao);
 
         using var reader = new StreamReader(request.ArquivoStream);
         int sequencia = 1;
@@ -117,37 +125,16 @@ public class CreateArquivoFromUploadHandler
             response.Sucesso = false;
             return response;
         }
-
-        //var modelMapper = _mapper.Map<List<Arquivo>>(linhasDto);
-
-        var listaA = new List<Arquivo>();
         
-        listaA.Add(new Arquivo()
-        {
-            ArquivoStatusId = Guid.Parse("D788BCAF-CDB2-495C-985D-355CE1157544"),
-            EmpresaId = Guid.Parse("3A86FD10-725F-4143-AE55-7F127BC85A4E"),
-            DataInsercao = DateTime.Now,
-            DataProcessamento = linhasDto[0].DataProcessamento,
-            Estabelecimento = linhasDto[0].Estabelecimento,
-            EstruturaImportada = linhasDto[0].EstruturaImportada,
-            PeriodoFinal = linhasDto[0].PeriodoFinal,
-            PeriodoInicial = linhasDto[0].PeriodoInicial,
-            Sequencia = linhasDto[0].Sequencia
-        });
-        listaA.Add(new Arquivo()
-        {
-            ArquivoStatusId = Guid.Parse("D788BCAF-CDB2-495C-985D-355CE1157544"),
-            EmpresaId = Guid.Parse("3A86FD10-725F-4143-AE55-7F127BC85A4E"),
-            DataInsercao = DateTime.Now,
-            DataProcessamento = linhasDto[1].DataProcessamento,
-            Estabelecimento = linhasDto[1].Estabelecimento,
-            EstruturaImportada = linhasDto[1].EstruturaImportada,
-            PeriodoFinal = linhasDto[1].PeriodoFinal,
-            PeriodoInicial = linhasDto[1].PeriodoInicial,
-            Sequencia = linhasDto[1].Sequencia
-        });
+        var modelMapper = _mapper.Map<List<Arquivo>>(linhasDto);
 
-        await _repository.InsertRangeAsync(listaA, cancellationToken);
+        foreach (var item in modelMapper)
+        {
+            item.ArquivoStatusId = Guid.Parse("D788BCAF-CDB2-495C-985D-355CE1157544");
+            item.DataInsercao = DateTime.Now;
+        }
+
+        await _arquivoRepo.InsertRangeAsync(modelMapper, cancellationToken);
         
         return response;
     }
@@ -165,11 +152,10 @@ public class CreateArquivoFromUploadHandler
 
         var item = new CreateArquivoFromUploadLineDto
         {
-            SequenciaLinha = sequencia,
             EstruturaImportada = linha,
             Estabelecimento = estabelecimentoLine,
-            Empresa = empresaLine,
-            Sequencia = sequenciaLine
+            Sequencia = sequenciaLine,
+            EmpresaId = empresasNoTrack![empresaLine].Identificador
         };
 
         if (DateTime.TryParseExact(dtProcLine, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out var dtProcessamento))
@@ -196,11 +182,10 @@ public class CreateArquivoFromUploadHandler
 
         var item = new CreateArquivoFromUploadLineDto
         {
-            SequenciaLinha = sequencia,
             EstruturaImportada = linha,
             Estabelecimento = estabelecimentoLine,
             Sequencia = sequenciaLine,
-            Empresa = empresaLine
+            EmpresaId = empresasNoTrack![empresaLine].Identificador
         };
 
         if (DateTime.TryParseExact(dtProcLine, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out var dtProcessamento))
