@@ -1,6 +1,7 @@
 using CaseTecnico.MRA.Infrastructure.Context;
 using CaseTecnico.MRA.IoC;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,10 @@ builder.Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
+//VARIÁVEIS
+var allowedOrigins = builder.Configuration.GetSection("AllowedOriginsCors").Get<string[]>();
+
+
 //Registrar Application ( FluentValidation )
 builder.Services.AddApplication();
 
@@ -18,12 +23,21 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    //CONFIGURAÇÃO REALIZADA DENTRO DO csproj PARA HABILITAR O XML PARA COMENTÁRIOS NO SWAGGER.
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
 
+//CONFIGURAÇÃO DE CORS PARA ACESSO VIA BROWSER
+//PERMITINDO APENAS ROTAS DE ACORDO COM APPSETTINGS: AllowedOriginsCors
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngularApp", policy =>
+    options.AddPolicy("AllowedOriginsCors", policy =>
     {
-        policy.WithOrigins("http://localhost:4200") // URL do Angular
+        policy.WithOrigins(allowedOrigins!)
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -42,12 +56,48 @@ if (!app.Environment.IsProduction())
     }
 }
 
+//BLOQUEIO PARA USO FORA DE BROWSER, COMO POSTMAN. PARA USO É APENAS UTILIZAR O HEADER:
+//X-API-KEY e senha 
+app.Use(async (context, next) =>
+{
+    var path = context.Request.Path.Value;
+
+    // Ignora PingController
+    if (path != null && path.StartsWith("/ping", StringComparison.OrdinalIgnoreCase))
+    {
+        await next();
+        return;
+    }
+
+    var origin = context.Request.Headers["Origin"].ToString();
+    var apiKey = builder.Configuration["ApiSettings:ApiKey"];
+    var apiSecret = builder.Configuration["ApiSettings:ApiSecret"];
+
+    if (!string.IsNullOrEmpty(origin) && !allowedOrigins!.Contains(origin))
+    {
+        if (!context.Request.Headers.TryGetValue("X-API-KEY", out var requestKey) || requestKey != apiKey ||
+       !context.Request.Headers.TryGetValue("X-API-SECRET", out var requestSecret) || requestSecret != apiSecret)
+        {
+            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            await context.Response.WriteAsync("Forbidden");
+            return;
+        }
+    }
+
+    await next();
+});
+
+
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MRA API V1");
+    c.RoutePrefix = string.Empty; //ACESSAR VIA RAIZ
+});
 // app.MapOpenApi();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.UseCors("AllowAngularApp");
+app.UseCors("AllowedOriginsCors");
 app.Run();

@@ -1,13 +1,16 @@
 ﻿
 
+using CaseTecnico.MRA.Application.Mappings;
+using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivo;
+using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
+using CaseTecnico.MRA.Domain.Entities;
 using CaseTecnico.MRA.Domain.Interfaces.Repositories;
 using CaseTecnico.MRA.Infrastructure.Context;
 using CaseTecnico.MRA.Infrastructure.Repositories;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Data;
 
 namespace CaseTecnico.MRA.IoC;
 
@@ -33,12 +36,31 @@ public static class DependencyInjection
 
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
+        services.RegisterHandles();
+        services.RegisterMappers();
+        services.RegisterValidators();
         return services;
     }
 
    
     private static void RegisterRepositories(this IServiceCollection services)
     {
+        services.AddScoped<IArquivoRepository, ArquivoRepository>();
         services.AddScoped<ILogErroRepository, LogErroRepository>();
+    }
+    private static void RegisterHandles(this IServiceCollection services)
+    {
+        services.AddScoped<CreateArquivoFromUploadHandler>();
+    }
+    private static void RegisterMappers(this IServiceCollection services)
+    {
+        services.AddAutoMapper(cfg => {
+            cfg.AddProfile(new MapToProfile<CreateArquivoFromUploadLineDto, Arquivo>());
+        });
+    }
+    private static void RegisterValidators(this IServiceCollection services)
+    {
+        services.AddScoped<IValidator<CreateArquivoFromUploadLineDto>, CreateArquivoFromUploadValidator>();
+        //services.AddValidatorsFromAssembly(typeof(GetDatatableSolicitacaoBtValidator).Assembly);
     }
 }

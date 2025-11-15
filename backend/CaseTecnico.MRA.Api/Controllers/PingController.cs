@@ -6,9 +6,10 @@ namespace CaseTecnico.MRA.Api.Controllers;
 
 [Route("[controller]/[action]")]
 [ApiController]
+[AllowAnonymous]
 public class PingController : ControllerBase
 {
-    [AllowAnonymous, HttpGet]
+    [HttpGet]
     public IActionResult Get()
     {
         return Ok("APLICAÇÃO ONLINE");
