@@ -54,13 +54,10 @@ public static class DependencyInjection
     }
     private static void RegisterMappers(this IServiceCollection services)
     {
-        services.AddAutoMapper(cfg => {
-            cfg.AddProfile(new MapToProfile<CreateArquivoFromUploadLineDto, Arquivo>());
-        });
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     }
     private static void RegisterValidators(this IServiceCollection services)
     {
         services.AddScoped<IValidator<CreateArquivoFromUploadLineDto>, CreateArquivoFromUploadValidator>();
-        //services.AddValidatorsFromAssembly(typeof(GetDatatableSolicitacaoBtValidator).Assembly);
     }
 }

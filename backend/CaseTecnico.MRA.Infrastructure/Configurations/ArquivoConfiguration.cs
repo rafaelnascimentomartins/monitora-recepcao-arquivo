@@ -13,9 +13,11 @@ public sealed class ArquivoConfiguration : BaseEntityConfiguration<Arquivo>
         builder.ToTable("Arquivos");
 
         builder.Property(x => x.Estabelecimento)
+             .HasMaxLength(20)
              .IsRequired();
 
         builder.Property(x => x.Sequencia)
+             .HasMaxLength(20)
              .IsRequired();
 
         builder.Property(x => x.PeriodoFinal)

@@ -1,4 +1,5 @@
 ﻿
+using CaseTecnico.MRA.Application.Common.Resources;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
 using FluentValidation;
 
@@ -19,17 +20,19 @@ public class CreateArquivoFromUploadValidator : AbstractValidator<CreateArquivoF
             .Must(BeAValidDateNullable).WithMessage("Período final inválido.");
 
         RuleFor(x => x.Estabelecimento)
-            .GreaterThan(0).WithMessage("Estabelecimento deve ser maior que zero.");
+            .NotEmpty().WithMessage(string.Format(ValidationMessages.CampoObrigatorio, "Estabelecimento"))
+            .MaximumLength(20).WithMessage(string.Format(ValidationMessages.CampoTamanhoMaxInvalido, "Estabelecimento", 20));
 
         RuleFor(x => x.Sequencia)
-            .GreaterThan(0).WithMessage("Sequência deve ser maior que zero.");
+            .NotEmpty().WithMessage(string.Format(ValidationMessages.CampoObrigatorio, "Sequencia"))
+            .MaximumLength(20).WithMessage(string.Format(ValidationMessages.CampoTamanhoMaxInvalido, "Sequencia", 20));
 
         RuleFor(x => x.Empresa)
-            .NotEmpty().WithMessage("Empresa é obrigatória.")
-            .MaximumLength(50).WithMessage("Empresa possui tamanho inválido.");
+            .NotEmpty().WithMessage("Empresa é obrigatória.");
 
         RuleFor(x => x.EstruturaImportada)
-            .NotEmpty().WithMessage("Estrutura importada é obrigatória.");
+            .NotEmpty().WithMessage(string.Format(ValidationMessages.CampoObrigatorio, "EstruturaObject"))
+            .MaximumLength(50).WithMessage(string.Format(ValidationMessages.CampoTamanhoMaxInvalido, "EstruturaObject", 50));
     }
 
     private bool BeAValidDate(DateTime date)

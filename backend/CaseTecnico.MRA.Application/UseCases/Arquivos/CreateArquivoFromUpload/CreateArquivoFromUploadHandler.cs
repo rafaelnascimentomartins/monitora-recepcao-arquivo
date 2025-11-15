@@ -4,21 +4,22 @@ using CaseTecnico.MRA.Application.Common.Resources;
 using CaseTecnico.MRA.Domain.Entities;
 using CaseTecnico.MRA.Domain.Interfaces.Repositories;
 using FluentValidation;
+using Microsoft.VisualBasic;
 
 namespace CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
 
 public class CreateArquivoFromUploadHandler
 {
-    private readonly IMapper _mapper;
+    //private readonly IMapper _mapper;
     private readonly IArquivoRepository _repository;
     private readonly IValidator<CreateArquivoFromUploadLineDto> _validator;
 
     public CreateArquivoFromUploadHandler(
-        IMapper mapper, 
+        //IMapper mapper, 
         IArquivoRepository repository,
         IValidator<CreateArquivoFromUploadLineDto> validator)
     {
-        _mapper = mapper;
+        //_mapper = mapper;
         _repository = repository;
         _validator = validator;
     }
@@ -117,9 +118,36 @@ public class CreateArquivoFromUploadHandler
             return response;
         }
 
-        var modelMapper = _mapper.Map<List<Arquivo>>(linhasDto);
+        //var modelMapper = _mapper.Map<List<Arquivo>>(linhasDto);
 
-        await _repository.InsertRangeAsync(modelMapper, cancellationToken);
+        var listaA = new List<Arquivo>();
+        
+        listaA.Add(new Arquivo()
+        {
+            ArquivoStatusId = Guid.Parse("D788BCAF-CDB2-495C-985D-355CE1157544"),
+            EmpresaId = Guid.Parse("3A86FD10-725F-4143-AE55-7F127BC85A4E"),
+            DataInsercao = DateTime.Now,
+            DataProcessamento = linhasDto[0].DataProcessamento,
+            Estabelecimento = linhasDto[0].Estabelecimento,
+            EstruturaImportada = linhasDto[0].EstruturaImportada,
+            PeriodoFinal = linhasDto[0].PeriodoFinal,
+            PeriodoInicial = linhasDto[0].PeriodoInicial,
+            Sequencia = linhasDto[0].Sequencia
+        });
+        listaA.Add(new Arquivo()
+        {
+            ArquivoStatusId = Guid.Parse("D788BCAF-CDB2-495C-985D-355CE1157544"),
+            EmpresaId = Guid.Parse("3A86FD10-725F-4143-AE55-7F127BC85A4E"),
+            DataInsercao = DateTime.Now,
+            DataProcessamento = linhasDto[1].DataProcessamento,
+            Estabelecimento = linhasDto[1].Estabelecimento,
+            EstruturaImportada = linhasDto[1].EstruturaImportada,
+            PeriodoFinal = linhasDto[1].PeriodoFinal,
+            PeriodoInicial = linhasDto[1].PeriodoInicial,
+            Sequencia = linhasDto[1].Sequencia
+        });
+
+        await _repository.InsertRangeAsync(listaA, cancellationToken);
         
         return response;
     }
@@ -130,8 +158,8 @@ public class CreateArquivoFromUploadHandler
         CreateArquivoFromUploadResponse response)
     {
         int tipoRegistroLine = int.Parse(linha.Substring(0, 1));
-        long estabelecimentoLine = long.Parse(linha.Substring(9, 8));
-        long sequenciaLine = long.Parse(linha.Substring(29, 7));
+        string estabelecimentoLine = linha.Substring(9, 8);
+        string sequenciaLine = linha.Substring(29, 7);
         string empresaLine = linha.Substring(17, 12).Trim();
         string dtProcLine = linha.Substring(1, 8);
 
@@ -159,8 +187,8 @@ public class CreateArquivoFromUploadHandler
     {
 
         int tipoRegistroLine = int.Parse(linha.Substring(0, 1));
-        long estabelecimentoLine = long.Parse(linha.Substring(1, 9));
-        long sequenciaLine = long.Parse(linha.Substring(34, 7));
+        string estabelecimentoLine = linha.Substring(1, 9);
+        string sequenciaLine = linha.Substring(34, 7);
         string empresaLine = linha.Substring(41, 6).Trim();
         string dtProcLine = linha.Substring(10, 8);
         string dtPIniLine = linha.Substring(18, 8);

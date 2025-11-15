@@ -132,4 +132,10 @@
   <data name="ArquivoImpLinhaCampoInvalido" xml:space="preserve">
     <value>Linha {0}: O campo {1} encontra-se inválido.</value>
   </data>
+  <data name="CampoObrigatorio" xml:space="preserve">
+    <value>O campo {0} é obrigatório.</value>
+  </data>
+  <data name="CampoTamanhoMaxInvalido" xml:space="preserve">
+    <value>O campo {0} deve ter no máximo {1} caracteres.</value>
+  </data>
 </root>

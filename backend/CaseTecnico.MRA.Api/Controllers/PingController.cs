@@ -9,6 +9,14 @@ namespace CaseTecnico.MRA.Api.Controllers;
 [AllowAnonymous]
 public class PingController : ControllerBase
 {
+
+    /// <summary>
+    ///Health Check da plataform.
+    /// </summary>
+    /// <remarks>
+    /// </remarks>
+    /// <param></param>
+    /// <returns>Retorna mensagem de Ok para conexão com Api.</returns>
     [HttpGet]
     public IActionResult Get()
     {

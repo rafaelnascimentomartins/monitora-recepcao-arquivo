@@ -1,3 +1,4 @@
+using CaseTecnico.MRA.Api.Middlewares;
 using CaseTecnico.MRA.Infrastructure.Context;
 using CaseTecnico.MRA.IoC;
 using Microsoft.EntityFrameworkCore;
@@ -99,5 +100,6 @@ app.UseSwaggerUI(c =>
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("AllowedOriginsCors");
 app.Run();

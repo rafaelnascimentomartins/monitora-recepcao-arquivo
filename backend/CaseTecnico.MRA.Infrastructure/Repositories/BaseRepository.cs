@@ -29,12 +29,8 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
         if (entities == null || !entities.Any())
             return Enumerable.Empty<TEntity>();
 
-        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-
         await _dbSet.AddRangeAsync(entities, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
-
-        await transaction.CommitAsync(cancellationToken);
 
         return entities;
     }

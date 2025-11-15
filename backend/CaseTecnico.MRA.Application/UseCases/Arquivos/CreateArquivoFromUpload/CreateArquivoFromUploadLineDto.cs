@@ -7,8 +7,8 @@ public class CreateArquivoFromUploadLineDto
     public DateTime DataProcessamento { get; set; }
     public DateTime? PeriodoInicial { get; set; }
     public DateTime? PeriodoFinal { get; set; }
-    public long Estabelecimento { get; set; }
+    public string Estabelecimento { get; set; } = null!;
     public string Empresa { get; set; } = null!;
-    public long Sequencia { get; set; }
+    public string Sequencia { get; set; } = null!;
     public string EstruturaImportada { get; set; } = null!;
 }

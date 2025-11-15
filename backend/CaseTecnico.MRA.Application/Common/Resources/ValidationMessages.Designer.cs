@@ -104,5 +104,23 @@ namespace CaseTecnico.MRA.Application.Common.Resources {
                 return ResourceManager.GetString("ArquivoImpSemInfo", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo {0} é obrigatório..
+        /// </summary>
+        internal static string CampoObrigatorio {
+            get {
+                return ResourceManager.GetString("CampoObrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo {0} deve ter no máximo {1} caracteres..
+        /// </summary>
+        internal static string CampoTamanhoMaxInvalido {
+            get {
+                return ResourceManager.GetString("CampoTamanhoMaxInvalido", resourceCulture);
+            }
+        }
     }
 }
