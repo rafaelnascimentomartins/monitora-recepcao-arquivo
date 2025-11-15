@@ -29,5 +29,19 @@ public sealed class ArquivoConfiguration : BaseEntityConfiguration<Arquivo>
         builder.Property(x => x.DataProcessamento)
                .HasColumnType("datetime2(3)")
                .IsRequired();
+
+        builder.Property(x => x.EstruturaImportada)
+            .HasMaxLength(50)
+            .IsRequired();
+
+        builder.HasOne(x => x.ArquivoStatus)
+       .WithMany(s => s.Arquivos)  // COLLECTION Arquivos dentro da classe para busca inversa (se necessário)
+       .HasForeignKey(x => x.ArquivoStatusId)
+       .IsRequired();
+
+        builder.HasOne(x => x.Empresa)
+               .WithMany(e => e.Arquivos) // COLLECTION Arquivos dentro da classe para busca inversa (se necessário)
+               .HasForeignKey(x => x.EmpresaId)
+               .IsRequired();
     }
 }

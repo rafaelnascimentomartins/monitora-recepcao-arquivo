@@ -1,4 +1,6 @@
+using CaseTecnico.MRA.Infrastructure.Context;
 using CaseTecnico.MRA.IoC;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,17 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+//APLICAÇÃO DE Migrate PARA EXECUÇÃO AUTOMÁTICA DO SNAPSHOT MIGRATION
+//MAS APENAS SE NÃO FOR AMBIENTE PRODUTIVO
+if (!app.Environment.IsProduction())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        db.Database.Migrate();
+    }
+}
 
 app.UseSwagger();
 app.UseSwaggerUI();

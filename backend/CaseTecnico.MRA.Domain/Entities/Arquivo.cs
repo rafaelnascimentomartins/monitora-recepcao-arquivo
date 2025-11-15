@@ -12,4 +12,15 @@ public sealed class Arquivo : BaseEntity
     public DateTime? PeriodoFinal { get; set; }
 
     public int Sequencia { get; set; }
+
+    public string EstruturaImportada { get; set; } = null!;
+
+    // FKs de banco
+    public Guid ArquivoStatusId { get; set; }
+    public Guid EmpresaId { get; set; }
+
+
+    //MODELOS PARA INCLUDE
+    public Empresa? Empresa { get; set; }
+    public ArquivoStatus? ArquivoStatus { get; set; }
 }

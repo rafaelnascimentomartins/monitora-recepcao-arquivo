@@ -1,6 +1,8 @@
 ﻿
 
+using CaseTecnico.MRA.Domain.Interfaces.Repositories;
 using CaseTecnico.MRA.Infrastructure.Context;
+using CaseTecnico.MRA.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +17,14 @@ public static class DependencyInjection
     {
         services.AddDbContext<AppDbContext>(options =>
            options.UseSqlServer(
-               configuration.GetConnectionString("MRAConnection")));
+               configuration.GetConnectionString("MRAConnection"),
+                sqlOptions => sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(10),
+                    errorNumbersToAdd: null
+                )
+           )
+        );
 
         services.RegisterRepositories();
 
@@ -24,16 +33,12 @@ public static class DependencyInjection
 
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-
-
         return services;
     }
 
    
     private static void RegisterRepositories(this IServiceCollection services)
     {
-
-        
-
+        services.AddScoped<ILogErroRepository, LogErroRepository>();
     }
 }

@@ -19,9 +19,5 @@ public class BaseEntityConfiguration<TEntity> :
         builder.Property(x => x.DataInsercao)
                .HasColumnType("datetime2(3)")
                .IsRequired();
-
-        builder.Property(x => x.DataExclusao)
-               .HasColumnType("datetime2(3)")
-               .IsRequired(false);
     }
 }

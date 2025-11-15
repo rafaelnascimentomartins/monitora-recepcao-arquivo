@@ -23,8 +23,10 @@ public sealed class AppDbContext : DbContext
 
         // Aplica automaticamente todas as configurations
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-        
-        // Desabilita cascade delete para TODAS as FKs do projeto
+
+        // Desabilita cascade delete para TODAS as FKs do projeto globalmente,
+        // caso necessário executar exclusão em cascata em algo específico, apenas 
+        // adicionar na configuração do EF da classe: .OnDelete(DeleteBehavior.Cascate);
         foreach (var relationship in modelBuilder.Model.GetEntityTypes()
             .SelectMany(e => e.GetForeignKeys()))
         {
