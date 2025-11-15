@@ -1,6 +1,7 @@
 ﻿using CaseTecnico.MRA.Api.Models.Arquivo;
 using CaseTecnico.MRA.Api.Resources;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
+using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDatatable;
 using CaseTecnico.MRA.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,14 @@ namespace CaseTecnico.MRA.Api.Controllers;
 public class ArquivoController : ControllerBase
 {
     private readonly CreateArquivoFromUploadHandler _createArquivoFromUploadHandler;
+    private readonly GetArquivoDatatableHandler _getArquivoDatatableHandler;
 
-    public ArquivoController(CreateArquivoFromUploadHandler createArquivoFromUploadHandler)
+    public ArquivoController(
+        CreateArquivoFromUploadHandler createArquivoFromUploadHandler,
+        GetArquivoDatatableHandler getArquivoDatatableHandler)
     {
         _createArquivoFromUploadHandler = createArquivoFromUploadHandler;
+        _getArquivoDatatableHandler = getArquivoDatatableHandler;
     }
 
     /// <summary>
@@ -45,4 +50,13 @@ public class ArquivoController : ControllerBase
 
         return result.Sucesso ? Ok(result) : BadRequest(result.Mensagens);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetDatatable(CancellationToken cancellationToken)
+    {
+        var result = await _getArquivoDatatableHandler.Handle(cancellationToken);
+
+        return Ok();
+    }
+
 }

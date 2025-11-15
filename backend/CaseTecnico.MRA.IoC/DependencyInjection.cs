@@ -1,9 +1,6 @@
-﻿
-
-using CaseTecnico.MRA.Application.Mappings;
-using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivo;
+﻿using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivo;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
-using CaseTecnico.MRA.Domain.Entities;
+using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDatatable;
 using CaseTecnico.MRA.Domain.Interfaces.Repositories;
 using CaseTecnico.MRA.Infrastructure.Context;
 using CaseTecnico.MRA.Infrastructure.Repositories;
@@ -52,6 +49,7 @@ public static class DependencyInjection
     private static void RegisterHandles(this IServiceCollection services)
     {
         services.AddScoped<CreateArquivoFromUploadHandler>();
+        services.AddScoped<GetArquivoDatatableHandler>();
     }
     private static void RegisterMappers(this IServiceCollection services)
     {
