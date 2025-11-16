@@ -41,8 +41,10 @@ namespace CaseTecnico.MRA.Infrastructure.Migrations
                     b.Property<Guid>("EmpresaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Estabelecimento")
-                        .HasColumnType("int");
+                    b.Property<string>("Estabelecimento")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("EstruturaImportada")
                         .IsRequired()
@@ -55,8 +57,10 @@ namespace CaseTecnico.MRA.Infrastructure.Migrations
                     b.Property<DateTime?>("PeriodoInicial")
                         .HasColumnType("datetime2(3)");
 
-                    b.Property<int>("Sequencia")
-                        .HasColumnType("int");
+                    b.Property<string>("Sequencia")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Identificador");
 

@@ -3,7 +3,7 @@ namespace CaseTecnico.MRA.Domain.Entities;
 
 public sealed class Arquivo : BaseEntity
 {
-    public int Estabelecimento { get; set; }
+    public string Estabelecimento { get; set; } = null!;
 
     public DateTime DataProcessamento { get; set; }
 
@@ -11,7 +11,8 @@ public sealed class Arquivo : BaseEntity
 
     public DateTime? PeriodoFinal { get; set; }
 
-    public int Sequencia { get; set; }
+    public string Sequencia { get; set; } = null!;
+
 
     public string EstruturaImportada { get; set; } = null!;
 

@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CaseTecnico.MRA.Application\CaseTecnico.MRA.Application.csproj" />
+    <ProjectReference Include="..\CaseTecnico.MRA.CrossCutting\CaseTecnico.MRA.CrossCutting.csproj" />
     <ProjectReference Include="..\CaseTecnico.MRA.Infrastructure\CaseTecnico.MRA.Infrastructure.csproj" />
   </ItemGroup>
 
