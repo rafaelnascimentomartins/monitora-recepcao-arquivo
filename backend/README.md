@@ -1,10 +1,18 @@
-# monitora-recepcao-arquivo-backend
-Projeto para realização de upload de arquivos padronizados para processamento. Especificação Técnica: .NET9 com conexão SqlServer. Objetivo: Case Técnico.
+# Sobre
+
+Projeto de automação de upload de arquivos externos padronizados para processamento interno e consulta via portal Web.
+
+Especificação Técnica:
+
+.NET9 com conexão SqlServer
+
+Objetivo:
+Case Técnico.
 
 ## O que eu preciso para iniciar projeto localmente?
 
 1) Visual Studio 2022
-2) Docker Desktop
+2) Docker Desktop ( Opcional )
 
 ## Como baixar/clonar o projeto?
 
@@ -25,21 +33,28 @@ O projeto possui um histórico de uso das branches, não foram deletadas, mas fo
 
 Utilizar a branch `master` que já possui toda a alteração final.
 
-## Baixei o projeto e estou na branch master, o que preciso fazer para incia-lo?
+## Clonei o projeto e estou na branch master, como executo o projeto localmentem sem Docker?
 
-Etapa 1 Docker de início
-1) Abra o terminal CMD ou Powersheel 
+1) Abrir o projeto via plataforma Visual Studio 2022
+2) Abrir o arquivo appsettings.json dentro do projeto `Api`
+	OBS: O projeto contem a estrutura de appsettings.json padrão como ( Localhost, Development, Staging e Production )
+	Foi realizada uma configuração no arquivo launchSettings.json definindo a execução do projeto apontando para a configuração
+	que necessita.
+3) Atualizar a conexão de banco `MRAConnection` para sua conexão de banco local, não precisa de usuário SA.
+	OBS1: Teria de ter o SqlServer localmente instalado ou DbBeaver ( mas para usá-lo localmente precisa realizar algumas configurações internas )
+	OBS2: Apenas é necessário o banco ativo, não precisa criar nada de tabelas e etc... o Entity Framework faz esse papel.
+4) Clicar no botão `play` do Visual Studio 2022, selecione o arquivo appseetings que deseja executar: (localhost, development ou staging)
+	OBS: localhost executa o appsettings.json principal. 
+	
+## Clonei o projeto e estou na branch master, como executo o projeto via Docker?
+
+1) Abra o terminal CMD ou Powershell
 2) Execute o comando: `docker ps`, será listado todos os containers e imagens ativas em sua máquina
+OBS1: Todas as informações de análise de container, parar, iniciar e etc... pode ser feita pelo Docker Desktop também na aba containers.
+OBS2: Lembre-se de parar/excluir os containers no final da análise do projeto.
+	Parar container: `docker pause NOME_CONTAINER`
 
-OBS: Todas as informações de análise de container, parar, iniciar e etc... pode ser feita pelo Docker Desktop também na aba containers.
-
-Etapa 2 Iniciar/configurar o arquivo DockerFile do projeto para criar a estrutura geral Sql, Api e Angular.
-
--- A FAZER
-
-Etapa 3 (Opcional caso não Etapa 2)
-
-Criar container com imagem do SqlServer 2022
+### Quero executar o projeto localmente, mas o banco de dados em container
 
 1) Execute o comando `docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=MRASenhaCT#181125" -p 1433:1433 --name sqlserver -d mcr.microsoft.com/mssql/server:2022-latest`
 	Explicações:
@@ -50,10 +65,12 @@ Criar container com imagem do SqlServer 2022
 		`--name sqlserver` -> Nome do container (definição)
 		`-d` -> modo detached , sem isso trava seu terminal.
 		`mcr.microsoft.com/mssql/server:2022-latest` -> imagem do sql 2022
+	OBS: Caso coloque uma senha diferente, adicione no appsettings.
+
+2) Execute o comando: `docker ps` para verificar se o container com a imagem foi gerada ou abra o Docker Desktop.
+3) Para finalizar verificar a explicação: `Clonei o projeto e estou na branch master, como executo o projeto localmentem sem Docker?`
 
 
-Parar execução do container
+### Quero executar o projeto localmente, mas tudo em container
 
-1) Executar o comando: `docker pause sqlserver`
-
-
+AQUI VEM A BUCHA

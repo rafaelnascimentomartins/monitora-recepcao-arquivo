@@ -1,0 +1,25 @@
+﻿==============================================
+           📝 PROJECT NOTES
+==============================================
+
+Project Name: CaseTecnico.MRA.Infrastructure
+Project Type: Class Library
+
+----------------------------------------------
+1  PROJECT OVERVIEW
+----------------------------------------------
+Breve descrição do projeto:
+- Objetivo: Configuração de EF Core (ORM) e seus repositórios. 
+- Dep. project: Domain 
+- Tecnologias principais: .NET 9, EF Core ( To Sql )
+
+----------------------------------------------
+2  FOLDER STRUCTURE
+----------------------------------------------
+
+/BackEnd
+ ├── CaseTecnico.MRA.Infrastructure
+ │    ├── Configurations/      --> Configuração EF Core para: Campos obrigatórios, FKs, Keys, Tamanho Máx. e etc....
+      ├── Context/             --> Contexto de configuração do EF Core, DbSets e inicialização.
+      ├── Migrations/          --> Execuções da estrutura para o banco de dados referenciadas em Snapshot e histórico de execuções no banco.
+      ├── Repositories/        --> Repositório para conexão com banco de dados de acordo com a necessidade via Linq ( Orientado a Objeto ).

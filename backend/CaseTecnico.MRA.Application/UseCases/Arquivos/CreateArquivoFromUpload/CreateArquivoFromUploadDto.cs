@@ -1,7 +1,7 @@
 ﻿
 namespace CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
 
-public class CreateArquivoFromUploadLineDto
+public class CreateArquivoFromUploadDto
 {
     public DateTime DataProcessamento { get; set; }
     public DateTime? PeriodoInicial { get; set; }

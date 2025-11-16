@@ -1,0 +1,7 @@
+﻿---- > IGNORE LINE: O arquivo deverá conter essa estrutura abaixo de acordo com a empresa: UfCard ou FagammonCard
+---- > IGNORE LINE: Cada registro de banco por empresa deverá ficar por linhas
+---- > IGNORE LINE: Existe um limite de 50 linhas ( aplicação apenas de exemplo de funcionalidade, não precisa testar uma massa muito grande )
+---- > IGNORE LINE: Linhas vazias serão desconsideradas!
+
+09875643212019062620190625201906250000001UfCard
+12019052632165487FagammonCard0002451

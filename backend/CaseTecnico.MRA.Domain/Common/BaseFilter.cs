@@ -1,5 +1,5 @@
 ﻿
-namespace CaseTecnico.MRA.Application.Common;
+namespace CaseTecnico.MRA.Domain.Common;
 
 public abstract class BaseFilter
 {

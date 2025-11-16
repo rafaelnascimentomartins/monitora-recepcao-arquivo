@@ -1,11 +1,11 @@
 ﻿
+using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDatatable;
+
 namespace CaseTecnico.MRA.Application.UseCases.Arquivos.GetDatatableArquivo;
 
 public class GetArquivoDatatableResponse
 {
-    // ----- Campos da Entidade / DTO -----
-    public int Identificador { get; set; }
-    public int EmpresaId { get; set; }
+    public List<GetArquivoDatatableDto> Data { get; set; } = new();
 
     // ----- Paginação -----
     public int TotalRecords { get; set; }

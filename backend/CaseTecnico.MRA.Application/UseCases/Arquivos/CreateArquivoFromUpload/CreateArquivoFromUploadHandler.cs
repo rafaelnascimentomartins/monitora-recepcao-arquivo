@@ -1,9 +1,12 @@
 ﻿
 using AutoMapper;
 using CaseTecnico.MRA.Application.Common.Resources;
+using CaseTecnico.MRA.Application.Settings;
+using CaseTecnico.MRA.CrossCutting.Interfaces.Services;
 using CaseTecnico.MRA.Domain.Entities;
 using CaseTecnico.MRA.Domain.Interfaces.Repositories;
 using FluentValidation;
+using System.Dynamic;
 
 namespace CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
 
@@ -12,19 +15,25 @@ public class CreateArquivoFromUploadHandler
     private readonly IMapper _mapper;
     private readonly IArquivoRepository _arquivoRepo;
     private readonly IEmpresaRepository _empresaRepo;
-    private readonly IValidator<CreateArquivoFromUploadLineDto> _validator;
+    private readonly IValidator<CreateArquivoFromUploadDto> _validator;
+    private readonly IFileEncryptionService _fileService;
+    private readonly AppSettings _settings;
     private Dictionary<string, Empresa>? empresasNoTrack;
 
     public CreateArquivoFromUploadHandler(
         IMapper mapper, 
         IArquivoRepository arquivoRepo,
         IEmpresaRepository empresaRepo,
-        IValidator<CreateArquivoFromUploadLineDto> validator)
+        IFileEncryptionService fileService,
+        IValidator<CreateArquivoFromUploadDto> validator,
+        AppSettings settings)
     {
         _mapper = mapper;
         _arquivoRepo = arquivoRepo;
         _empresaRepo = empresaRepo;
         _validator = validator;
+        _fileService = fileService;
+        _settings = settings;
     }
 
     public async Task<CreateArquivoFromUploadResponse> Handle(
@@ -32,7 +41,7 @@ public class CreateArquivoFromUploadHandler
         CancellationToken cancellationToken = default)
     {
         var response = new CreateArquivoFromUploadResponse();
-        var linhasDto = new List<CreateArquivoFromUploadLineDto>();
+        var linhasDto = new List<CreateArquivoFromUploadDto>();
 
         var ext = Path.GetExtension(request.FileName).ToLower();
 
@@ -131,15 +140,20 @@ public class CreateArquivoFromUploadHandler
         foreach (var item in modelMapper)
         {
             item.ArquivoStatusId = Guid.Parse("D788BCAF-CDB2-495C-985D-355CE1157544");
-            item.DataInsercao = DateTime.Now;
         }
 
+
+
         await _arquivoRepo.InsertRangeAsync(modelMapper, cancellationToken);
-        
+
+        await _fileService.SaveEncryptedAsync(request.ArquivoStream, 
+            _settings.FileEncryption.DestinationPath!, 
+            _settings.FileEncryption.FileKey!);
+
         return response;
     }
 
-    private CreateArquivoFromUploadLineDto ParseFagammonCard(
+    private CreateArquivoFromUploadDto ParseFagammonCard(
         string linha, 
         int sequencia, 
         CreateArquivoFromUploadResponse response)
@@ -150,7 +164,7 @@ public class CreateArquivoFromUploadHandler
         string empresaLine = linha.Substring(17, 12).Trim();
         string dtProcLine = linha.Substring(1, 8);
 
-        var item = new CreateArquivoFromUploadLineDto
+        var item = new CreateArquivoFromUploadDto
         {
             EstruturaImportada = linha,
             Estabelecimento = estabelecimentoLine,
@@ -166,7 +180,7 @@ public class CreateArquivoFromUploadHandler
         return item;
     }
 
-    private CreateArquivoFromUploadLineDto ParseUfCard(
+    private CreateArquivoFromUploadDto ParseUfCard(
         string linha, 
         int sequencia,
         CreateArquivoFromUploadResponse response)
@@ -180,7 +194,7 @@ public class CreateArquivoFromUploadHandler
         string dtPIniLine = linha.Substring(18, 8);
         string dtPFinLine = linha.Substring(26, 8);
 
-        var item = new CreateArquivoFromUploadLineDto
+        var item = new CreateArquivoFromUploadDto
         {
             EstruturaImportada = linha,
             Estabelecimento = estabelecimentoLine,

@@ -1,6 +1,8 @@
 ﻿
 using AutoMapper;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.GetDatatableArquivo;
+using CaseTecnico.MRA.Domain.Common;
+using CaseTecnico.MRA.Domain.Common.Filters;
 using CaseTecnico.MRA.Domain.Interfaces.Repositories;
 
 namespace CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDatatable;
@@ -19,16 +21,29 @@ public class GetArquivoDatatableHandler
     }
 
     public async Task<GetArquivoDatatableResponse> Handle(
+        GetArquivoDatatableRequest request,
          CancellationToken cancellationToken = default)
     {
-        var pagedResult = await _repository.GetDatatableAsync(cancellationToken);
+        var filter = new ArquivoFilter
+        {
+            Page = request.Page,
+            PageSize = request.PageSize,
+            SortField = request.SortField,
+            SortDirection = request.SortDirection,
+            EmpresaId = request.EmpresaId,
+            ArquivoStatusId = request.ArquivoStatusId
+        };
 
-        var mapperResponse = _mapper.Map<GetArquivoDatatableResponse>(pagedResult.Data);
+        var pagedResult = await _repository.GetDatatableAsync(filter, cancellationToken);
 
-        mapperResponse.Page = pagedResult.Page;
-        mapperResponse.PageSize = pagedResult.PageSize;
-        mapperResponse.TotalRecords = pagedResult.TotalRecords;
-        
-        return mapperResponse;
+        var mapperData = _mapper.Map<List<GetArquivoDatatableDto>>(pagedResult.Data);
+
+        return new GetArquivoDatatableResponse
+        {
+            Data = mapperData,
+            TotalRecords = pagedResult.TotalRecords,
+            Page = pagedResult.Page,
+            PageSize = pagedResult.PageSize,
+        };
     }
 }

@@ -1,9 +1,12 @@
 ﻿using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivo;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
+using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDashResumoStatus;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDatatable;
+using CaseTecnico.MRA.CrossCutting.Interfaces.Services;
 using CaseTecnico.MRA.Domain.Interfaces.Repositories;
 using CaseTecnico.MRA.Infrastructure.Context;
 using CaseTecnico.MRA.Infrastructure.Repositories;
+using CaseTecnico.MRA.Infrastructure.Services;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +30,7 @@ public static class DependencyInjection
         );
 
         services.RegisterRepositories();
+        services.RegisterServices();
 
         return services;
     }
@@ -50,6 +54,7 @@ public static class DependencyInjection
     {
         services.AddScoped<CreateArquivoFromUploadHandler>();
         services.AddScoped<GetArquivoDatatableHandler>();
+        services.AddScoped<GetArquivoDashResumoStatusHandler>();
     }
     private static void RegisterMappers(this IServiceCollection services)
     {
@@ -57,6 +62,10 @@ public static class DependencyInjection
     }
     private static void RegisterValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<CreateArquivoFromUploadLineDto>, CreateArquivoFromUploadValidator>();
+        services.AddScoped<IValidator<CreateArquivoFromUploadDto>, CreateArquivoFromUploadValidator>();
+    }
+    private static void RegisterServices(this IServiceCollection services)
+    {
+        services.AddScoped<IFileEncryptionService, FileEncryptionService>();
     }
 }

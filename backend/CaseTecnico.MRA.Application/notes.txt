@@ -1,0 +1,24 @@
+﻿==============================================
+           📝 PROJECT NOTES
+==============================================
+
+Project Name: CaseTecnico.MRA.Application
+Project Type: Class Library
+
+----------------------------------------------
+1  PROJECT OVERVIEW
+----------------------------------------------
+Breve descrição do projeto:
+- Objetivo: Mapeamento DTOxEntities, UseCases ou Commands para uso do Handler.
+- Dep. project: Domain
+- Tecnologias principais: .NET 9, AutoMapper
+
+----------------------------------------------
+2  FOLDER STRUCTURE
+----------------------------------------------
+
+/BackEnd
+ ├── CaseTecnico.MRA.Domain
+ │    ├── Common/            --> Uso global para objetos pré-definidos abstratos e extensões.
+      ├── Mappings/          --> Mapeamento de conversão dos modelos.
+      ├── UseCases/          --> Handles

@@ -1,0 +1,25 @@
+﻿==============================================
+           📝 PROJECT NOTES
+==============================================
+
+Project Name: CaseTecnico.MRA.Domain
+Project Type: Class Library
+
+----------------------------------------------
+1  PROJECT OVERVIEW
+----------------------------------------------
+Breve descrição do projeto:
+- Objetivo: Armazenamento de Entidades ( Cópias tabelas banco ), Enums e Interfaces. 
+- Dep. project: N/A 
+- Tecnologias principais: .NET 9
+
+----------------------------------------------
+2  FOLDER STRUCTURE
+----------------------------------------------
+
+/BackEnd
+ ├── CaseTecnico.MRA.Domain
+ │    ├── Common/            --> Uso global para objetos pré-definidos abstratos e extensões.
+      ├── Entities/          --> Modelos de representações de tabelas do banco de dados referenciados como DbSet.
+      ├── Enums/             --> Conjunto de valores fixos.
+      ├── Interfaces/        --> Contratos com as definição dos conjuntos de métodos, propriedades e eventos.

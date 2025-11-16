@@ -1,0 +1,22 @@
+﻿==============================================
+           📝 PROJECT NOTES
+==============================================
+
+Project Name: CaseTecnico.MRA.IoC
+Project Type: Class Library
+
+----------------------------------------------
+1  PROJECT OVERVIEW
+----------------------------------------------
+Breve descrição do projeto:
+- Objetivo: Intermediário da Api -> Infra/Application, para injeção de dependências e configuração em Program.cs.
+- Dep. project: Application, Infrastructure 
+- Tecnologias principais: .NET 9, Injeção de dependência AutoMapper.
+
+----------------------------------------------
+2  FOLDER STRUCTURE
+----------------------------------------------
+
+/BackEnd
+ ├── CaseTecnico.MRA.IoC
+ │    ├── DependencyInjection

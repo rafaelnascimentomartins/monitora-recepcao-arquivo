@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CaseTecnico.MRA.CrossCutting\CaseTecnico.MRA.CrossCutting.csproj" />
     <ProjectReference Include="..\CaseTecnico.MRA.Domain\CaseTecnico.MRA.Domain.csproj" />
   </ItemGroup>
 

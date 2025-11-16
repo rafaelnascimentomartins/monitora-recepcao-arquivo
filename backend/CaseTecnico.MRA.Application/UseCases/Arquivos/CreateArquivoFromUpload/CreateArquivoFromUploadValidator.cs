@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivo;
 
-public class CreateArquivoFromUploadValidator : AbstractValidator<CreateArquivoFromUploadLineDto>
+public class CreateArquivoFromUploadValidator : AbstractValidator<CreateArquivoFromUploadDto>
 {
     public CreateArquivoFromUploadValidator()
     {

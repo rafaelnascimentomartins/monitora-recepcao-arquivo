@@ -1,4 +1,5 @@
 using CaseTecnico.MRA.Api.Middlewares;
+using CaseTecnico.MRA.Application.Settings;
 using CaseTecnico.MRA.Infrastructure.Context;
 using CaseTecnico.MRA.IoC;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,9 @@ builder.Configuration
 //VARIÁVEIS
 var allowedOrigins = builder.Configuration.GetSection("AllowedOriginsCors").Get<string[]>();
 
+//MAPEIA O APPSETTINGS
+var appSettings = builder.Configuration.Get<AppSettings>();
+builder.Services.AddSingleton(appSettings);
 
 //Registrar Application ( FluentValidation )
 builder.Services.AddApplication();
@@ -61,26 +65,27 @@ if (!app.Environment.IsProduction())
 //X-API-KEY e senha 
 app.Use(async (context, next) =>
 {
-    var path = context.Request.Path.Value;
+    var path = context.Request.Path.Value ?? string.Empty;
+    var refer = context.Request.Headers["Referer"].ToString();
 
-    // Ignora PingController
-    if (path != null && path.StartsWith("/ping", StringComparison.OrdinalIgnoreCase))
+    // VERIFICANDO SE A ORIGEM DE QUEM CHAMOU VEIO DO SWAGGER.
+    if (!string.IsNullOrEmpty(refer) && refer.Contains("/swagger", StringComparison.OrdinalIgnoreCase))
     {
         await next();
         return;
     }
-
-    var origin = context.Request.Headers["Origin"].ToString();
+    
+    var origin = context.Request.Headers["Origin"].ToString(); //COM VALOR APENAS EM BROWSERS
     var apiKey = builder.Configuration["ApiSettings:ApiKey"];
     var apiSecret = builder.Configuration["ApiSettings:ApiSecret"];
 
-    if (!string.IsNullOrEmpty(origin) && !allowedOrigins!.Contains(origin))
+    if (!allowedOrigins!.Contains(origin))
     {
         if (!context.Request.Headers.TryGetValue("X-API-KEY", out var requestKey) || requestKey != apiKey ||
        !context.Request.Headers.TryGetValue("X-API-SECRET", out var requestSecret) || requestSecret != apiSecret)
         {
             context.Response.StatusCode = StatusCodes.Status403Forbidden;
-            await context.Response.WriteAsync("Forbidden");
+            await context.Response.WriteAsync("Acesso não autorizado! X-API-KEY e X-API-SECRET não definidos.");
             return;
         }
     }
@@ -93,7 +98,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "MRA API V1");
-    c.RoutePrefix = string.Empty; //ACESSAR VIA RAIZ
+    c.RoutePrefix = "swagger";  //ALTERANDO PARA ROTA: swagger, POR CONTA DA VALIDAÇÃO DE ACESSO.
 });
 // app.MapOpenApi();
 
