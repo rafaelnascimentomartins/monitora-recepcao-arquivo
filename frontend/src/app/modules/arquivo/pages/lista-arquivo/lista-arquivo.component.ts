@@ -10,43 +10,18 @@ import { DatatableComponent } from '../../../../shared/components/datatable/data
 import { DatatableLazy } from '../../../../core/interfaces/datatable-lazy.interface';
 import { DatatableColumn } from '../../../../core/models/datatable-column.model';
 import { Breadcrumb } from 'primeng/breadcrumb';
+import { RoutesEnum } from '../../../../core/enums/routes.enum';
 
 @Component({
   selector: 'app-lista-arquivo',
+  standalone: true,
   imports: [
     CommonModule, 
     DatatableComponent,
     Breadcrumb
   ],
   templateUrl: './lista-arquivo.component.html',
-  styles: `
-  .page-header {
-  margin-bottom: 1.5rem;
-}
-
-.page-title {
-  margin-top: 0.75rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--p-text-color);
-  letter-spacing: -0.5px;
-  font-family: "Inter", sans-serif;
-}
-
-:host ::ng-deep .p-breadcrumb {
-  background: transparent;
-  border: none;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-:host ::ng-deep .p-breadcrumb .p-menuitem-link {
-  font-family: "Inter", sans-serif;
-  font-size: 0.9rem;
-  color: var(--p-primary-600);
-  font-weight: 500;
-}
-`,
+  styleUrls: ['./lista-arquivo.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListaArquivoComponent implements OnInit, OnDestroy  {
@@ -85,7 +60,7 @@ export class ListaArquivoComponent implements OnInit, OnDestroy  {
 
   ngOnInit(): void {
     this.breadcrumbItems = [
-      { label: 'Home', routerLink: '/' },
+      { label: 'Inicio', routerLink: RoutesEnum.HOME },
       { label: 'Lista de arquivos', disabled: true }
     ];
   }
