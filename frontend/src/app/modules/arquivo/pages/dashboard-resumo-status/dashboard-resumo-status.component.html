@@ -1,0 +1,11 @@
+<div class="page-header">
+  <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
+  <h1 class="page-title">Dashboard de Resumo Status</h1>
+</div>
+
+  <!-- PIE CHART -->
+  <app-chart-pie
+    title="Resumo Status"
+    [data]="pieData"
+    [total]="total"
+  ></app-chart-pie>

@@ -21,6 +21,13 @@ export const routes: Routes = [
             import(
               './modules/arquivo/pages/lista-arquivo/lista-arquivo.component'
             ).then((m) => m.ListaArquivoComponent),
+        },
+        {
+          path: RoutesEnum.DASHBOARDS_ARQUIVO,
+          loadComponent: () =>
+            import(
+              './modules/arquivo/pages/dashboard-resumo-status/dashboard-resumo-status.component'
+            ).then((m) => m.DashboardResumoStatusComponent),
         }
     ],
   },
