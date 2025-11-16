@@ -35,6 +35,11 @@ public class ArquivoRepository : BaseRepository<Arquivo>, IArquivoRepository
         var totalRecords = await query.CountAsync(cancellationToken);
 
         // ORDERNAÇÃO (dinâmica)
+        if (filter.SortField?.ToLower() == "arquivostatusdescricao")
+            filter.SortField = "ArquivoStatusId";
+        else if (filter.SortField?.ToLower() == "empresadescricao")
+            filter.SortField = "EmpresaId";
+
         query = query.ApplySorting(filter.SortField, filter.SortDirection);
 
         //PAGINAÇÃO
