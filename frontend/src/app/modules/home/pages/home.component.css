@@ -1,0 +1,82 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* HERO CARD */
+.hero-card {
+  padding: 1.5rem;
+  border-radius: 16px;
+}
+
+.hero-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero-header i {
+  font-size: 2rem;
+  color: var(--primary-500);
+}
+
+.hero-header h4 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.hero-card p {
+  font-size: 1.1rem;
+  line-height: 1.6rem;
+  margin-top: 0.5rem;
+  color: var(--text-color-secondary);
+}
+
+/* QUICK MENU */
+.quick-menu {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* QUICK CARDS */
+.quick-card {
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+  border-radius: 12px;
+}
+
+.quick-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  background-color: var(--mra-color-primary);
+  color: #ffff;
+}
+
+.quick-card-content {
+  text-align: center;
+  padding: 1rem;
+}
+
+.quick-card-content i {
+  font-size: 2rem;
+  color: var(--primary-500);
+  margin-bottom: .5rem;
+  display: inline-block;
+}
+
+.quick-card-content h3 {
+  margin: .5rem 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.quick-card-content p {
+  margin: 0;
+  color: var(--text-color-secondary);
+}
+
+  

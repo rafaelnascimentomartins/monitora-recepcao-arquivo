@@ -1,0 +1,41 @@
+<div class="layout-root">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      @if(!isMobile)
+     {
+       <button
+        pButton
+        type="button"
+        icon="pi pi-bars"
+        class="p-button-text p-button-plain"
+        (click)="toggleDrawer()">
+      </button>
+
+     }
+     
+      <div class="brand">MRA - Monitoramento de Recepção de Arquivos</div>
+    </header>
+
+    <div class="layout-container">
+
+      <!-- FIXED SIDEBAR (desktop) -->
+       @if(isMobile)
+       {
+         <aside class="sidebar-fixed">
+          <p-panelMenu [model]="menuItems"></p-panelMenu>
+        </aside>
+       }
+
+      <!-- DRAWER (mobile) -->
+      <p-drawer [(visible)]="drawerVisible" header="Menu" position="left">
+        <p-panelMenu [model]="menuItems" class="w-full md:w-20rem"></p-panelMenu>
+      </p-drawer>
+
+      <!-- MAIN CONTENT -->
+      <main class="content">
+        <router-outlet></router-outlet>
+      </main>
+
+    </div>
+  </div>

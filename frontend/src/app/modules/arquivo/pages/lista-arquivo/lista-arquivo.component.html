@@ -1,0 +1,12 @@
+<div class="page-header">
+  <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
+  <h1 class="page-title">Lista de arquivos</h1>
+</div>
+
+<app-datatable
+    [data]="arquivos"
+    [loading]="flagLoadingLista"
+    [totalRecords]="totalRecords"
+    [columns]="columns"
+    (lazyLoad)="onLazyLoad($event)" 
+  />
