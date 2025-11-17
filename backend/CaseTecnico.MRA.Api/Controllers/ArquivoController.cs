@@ -1,9 +1,9 @@
 ﻿using CaseTecnico.MRA.Api.Models.Arquivo;
 using CaseTecnico.MRA.Api.Resources;
+using CaseTecnico.MRA.Application.UseCases.ArquivoNaoRecepcionados.GetArquivoNaoRecepcionadoDatatable;
+using CaseTecnico.MRA.Application.UseCases.ArquivoRecepcionados.GetArquivoRecepcionadoDatatable;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDashResumoStatus;
-using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDatatable;
-using CaseTecnico.MRA.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CaseTecnico.MRA.Api.Controllers;
@@ -13,17 +13,21 @@ namespace CaseTecnico.MRA.Api.Controllers;
 public class ArquivoController : ControllerBase
 {
     private readonly CreateArquivoFromUploadHandler _createArquivoFromUploadHandler;
-    private readonly GetArquivoDatatableHandler _getArquivoDatatableHandler;
-    private readonly GetArquivoDashResumoStatusHandler _getArquivoDashResumoStatusHandler;
+    private readonly GetArquivoRecepcionadoDatatableHandler _getArquivoRecepcionadoDatatableHandler;
+    private readonly GetArquivoNaoRecepcionadoDatatableHandler _getArquivoNaoRecepcionadoDatatableHandler;
+    //private readonly GetArquivoDashResumoStatusHandler _getArquivoDashResumoStatusHandler;
 
     public ArquivoController(
         CreateArquivoFromUploadHandler createArquivoFromUploadHandler,
-        GetArquivoDatatableHandler getArquivoDatatableHandler,
-        GetArquivoDashResumoStatusHandler getArquivoDashResumoStatusHandler)
+        GetArquivoRecepcionadoDatatableHandler getArquivoRecepcionadoDatatableHandler,
+         GetArquivoNaoRecepcionadoDatatableHandler getArquivoNaoRecepcionadoDatatableHandler
+       // GetArquivoDashResumoStatusHandler getArquivoDashResumoStatusHandler
+        )
     {
         _createArquivoFromUploadHandler = createArquivoFromUploadHandler;
-        _getArquivoDatatableHandler = getArquivoDatatableHandler;
-        _getArquivoDashResumoStatusHandler = getArquivoDashResumoStatusHandler;
+        _getArquivoRecepcionadoDatatableHandler = getArquivoRecepcionadoDatatableHandler;
+        //_getArquivoDashResumoStatusHandler = getArquivoDashResumoStatusHandler;
+        _getArquivoNaoRecepcionadoDatatableHandler = getArquivoNaoRecepcionadoDatatableHandler;
     }
 
     /// <summary>
@@ -98,10 +102,32 @@ public class ArquivoController : ControllerBase
     /// <param name="cancellationToken">Configuração interna de cancellationToken </param>
     /// <returns>Retorna sucesso com a lista padronizada para datatable.</returns>
     [HttpGet]
-    public async Task<IActionResult> GetDatatable([FromQuery] GetArquivoDatatableRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetRecepcionadoDatatable([FromQuery] GetArquivoRecepcionadoDatatableRequest request, CancellationToken cancellationToken)
     {
-        return Ok(await _getArquivoDatatableHandler.Handle(request, cancellationToken));
+        return Ok(await _getArquivoRecepcionadoDatatableHandler.Handle(request, cancellationToken));
     }
+
+    /// <summary>
+    /// Método utilizado para realizar a consulta via datatable FronEnd e filtragem. 
+    /// </summary>
+    /// <remarks>
+    /// Este endpoint recebe como parâmetro o modelo request contendo os campos de filtragem de 
+    /// resultados e este modelo possui uma herença de BaseFilter contendo todas os parâmetros
+    /// de configurções do datatable.
+    /// 
+    /// Acesso via Postman: Headers -> appsettings config header: X-API-KEY e X-API-SECRET
+    /// </remarks>
+    /// <param name="request">Classe GetArquivoDatatableRequest com os campos de filtragem e com uso de herança do 
+    /// BaseFilter contendo os campos de configuração do datatable.
+    /// </param>
+    /// <param name="cancellationToken">Configuração interna de cancellationToken </param>
+    /// <returns>Retorna sucesso com a lista padronizada para datatable.</returns>
+    [HttpGet]
+    public async Task<IActionResult> GetNaoRecepcionadoDatatable([FromQuery] GetArquivoNaoRecepcionadoDatatableRequest request, CancellationToken cancellationToken)
+    {
+        return Ok(await _getArquivoNaoRecepcionadoDatatableHandler.Handle(request, cancellationToken));
+    }
+
 
     /// <summary>
     /// Método utilizado para realizar a consulta via dashboard FronEnd. 
@@ -112,9 +138,9 @@ public class ArquivoController : ControllerBase
     /// Acesso via Postman: Headers -> appsettings config header: X-API-KEY e X-API-SECRET
     /// </remarks>
     /// <returns>Retorna sucesso com a lista padronizada para dashboard.</returns>
-    [HttpGet]
-    public async Task<IActionResult> GetDashResumoStatus(CancellationToken cancellationToken)
-    {
-        return Ok(await _getArquivoDashResumoStatusHandler.Handle(cancellationToken));
-    }
+    //[HttpGet]
+    //public async Task<IActionResult> GetDashResumoStatus(CancellationToken cancellationToken)
+    //{
+    //    return Ok(await _getArquivoDashResumoStatusHandler.Handle(cancellationToken));
+    //}
 }

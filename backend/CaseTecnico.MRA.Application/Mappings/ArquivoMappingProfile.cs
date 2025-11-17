@@ -1,5 +1,7 @@
 ﻿
 using AutoMapper;
+using CaseTecnico.MRA.Application.UseCases.ArquivoNaoRecepcionados.GetArquivoNaoRecepcionadoDatatable;
+using CaseTecnico.MRA.Application.UseCases.ArquivoRecepcionados.GetArquivoRecepcionadoDatatable;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDashResumoStatus;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDatatable;
@@ -12,16 +14,21 @@ public class ArquivoMappingProfile : Profile
 {
     public ArquivoMappingProfile()
     {
-        CreateMap<CreateArquivoFromUploadDto, Arquivo>();
-        CreateMap<Arquivo, GetArquivoDatatableDto>()
+        CreateMap<CreateArquivoFromUploadRecepcionadoDto, ArquivoRecepcionado>();
+
+
+        //ArquivoRecepcionado
+        CreateMap<ArquivoRecepcionado, CreateArquivoFromUploadRecepcionadoDto>();
+        CreateMap<ArquivoRecepcionado, GetArquivoRecepcionadoDatatableDto>()
             .ForMember(
-                dest => dest.EmpresaDescricao, 
+                dest => dest.EmpresaDescricao,
                 opt => opt.MapFrom(src => src.Empresa != null ? src.Empresa.Descricao : null)
-            )
-            .ForMember(
-                dest => dest.ArquivoStatusDescricao,
-                opt => opt.MapFrom(src => src.ArquivoStatus != null ? src.ArquivoStatus.Descricao : null)
             );
+
+        //ArquivoNaoRecepcionado
+        CreateMap<CreateArquivoFromUploadNaoRecepcionadoDto, ArquivoNaoRecepcionado>();
+        CreateMap<ArquivoNaoRecepcionado, GetArquivoNaoRecepcionadoDatatableDto>();
+
         CreateMap<ArquivoResumoStatusModel, GetArquivoDashResumoStatusDto>();
     }
 }

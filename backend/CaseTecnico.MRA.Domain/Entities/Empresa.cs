@@ -5,5 +5,5 @@ public sealed class Empresa : BaseEntity
 {
     public string Descricao { get; set; } = string.Empty;
 
-    public ICollection<Arquivo>? Arquivos { get; set; }
+    public ICollection<ArquivoRecepcionado>? ArquivoRecepcionados { get; set; }
 }

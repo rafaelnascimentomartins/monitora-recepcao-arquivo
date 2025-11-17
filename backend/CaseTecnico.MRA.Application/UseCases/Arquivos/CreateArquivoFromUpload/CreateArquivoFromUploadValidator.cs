@@ -5,14 +5,11 @@ using FluentValidation;
 
 namespace CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivo;
 
-public class CreateArquivoFromUploadValidator : AbstractValidator<CreateArquivoFromUploadDto>
+public class CreateArquivoFromUploadValidator : AbstractValidator<CreateArquivoFromUploadRecepcionadoDto>
 {
     public CreateArquivoFromUploadValidator()
     {
         RuleFor(x => x.DataProcessamento)
-           .NotEmpty().WithMessage(
-                string.Format(ValidationMessages.CampoInvalido, "Data processamento")
-            )
            .Must(BeAValidDate).WithMessage(
                 string.Format(ValidationMessages.CampoInvalido, "Data processamento")
             );

@@ -11,9 +11,8 @@ public sealed class AppDbContext : DbContext
     {
     }
 
-
-    public DbSet<Arquivo> Arquivos => Set<Arquivo>();
-    public DbSet<ArquivoStatus> ArquivoStatus => Set<ArquivoStatus>();
+    public DbSet<ArquivoRecepcionado> ArquivoRecepcionados => Set<ArquivoRecepcionado>();
+    public DbSet<ArquivoNaoRecepcionado> ArquivoNaoRecepcionados => Set<ArquivoNaoRecepcionado>();
     public DbSet<Empresa> Empresas => Set<Empresa>();
     public DbSet<LogErro> LogErros => Set<LogErro>();
 
