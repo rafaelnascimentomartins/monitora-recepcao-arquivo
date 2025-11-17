@@ -1,7 +1,7 @@
 ﻿
 using AutoMapper;
 using CaseTecnico.MRA.Application.Common.Resources;
-using CaseTecnico.MRA.Application.Parsers.Interfaces;
+using CaseTecnico.MRA.Application.Interfaces.Parsers;
 using CaseTecnico.MRA.Application.Settings;
 using CaseTecnico.MRA.CrossCutting.Interfaces.Services;
 using CaseTecnico.MRA.Domain.Entities;

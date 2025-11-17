@@ -1,7 +1,7 @@
 ﻿using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
 using CaseTecnico.MRA.Domain.Entities;
 
-namespace CaseTecnico.MRA.Application.Parsers.Interfaces;
+namespace CaseTecnico.MRA.Application.Interfaces.Parsers;
 
 public interface IParserArquivo
 {

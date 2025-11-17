@@ -3,7 +3,6 @@ using CaseTecnico.MRA.Api.Resources;
 using CaseTecnico.MRA.Application.UseCases.ArquivoNaoRecepcionados.GetArquivoNaoRecepcionadoDatatable;
 using CaseTecnico.MRA.Application.UseCases.ArquivoRecepcionados.GetArquivoRecepcionadoDatatable;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
-using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDashResumoStatus;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CaseTecnico.MRA.Api.Controllers;
@@ -15,18 +14,15 @@ public class ArquivoController : ControllerBase
     private readonly CreateArquivoFromUploadHandler _createArquivoFromUploadHandler;
     private readonly GetArquivoRecepcionadoDatatableHandler _getArquivoRecepcionadoDatatableHandler;
     private readonly GetArquivoNaoRecepcionadoDatatableHandler _getArquivoNaoRecepcionadoDatatableHandler;
-    //private readonly GetArquivoDashResumoStatusHandler _getArquivoDashResumoStatusHandler;
 
     public ArquivoController(
         CreateArquivoFromUploadHandler createArquivoFromUploadHandler,
         GetArquivoRecepcionadoDatatableHandler getArquivoRecepcionadoDatatableHandler,
          GetArquivoNaoRecepcionadoDatatableHandler getArquivoNaoRecepcionadoDatatableHandler
-       // GetArquivoDashResumoStatusHandler getArquivoDashResumoStatusHandler
         )
     {
         _createArquivoFromUploadHandler = createArquivoFromUploadHandler;
         _getArquivoRecepcionadoDatatableHandler = getArquivoRecepcionadoDatatableHandler;
-        //_getArquivoDashResumoStatusHandler = getArquivoDashResumoStatusHandler;
         _getArquivoNaoRecepcionadoDatatableHandler = getArquivoNaoRecepcionadoDatatableHandler;
     }
 

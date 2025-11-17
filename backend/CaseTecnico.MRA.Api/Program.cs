@@ -3,6 +3,7 @@ using CaseTecnico.MRA.Application.Settings;
 using CaseTecnico.MRA.Infrastructure.Context;
 using CaseTecnico.MRA.IoC;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -68,13 +69,24 @@ app.Use(async (context, next) =>
     var path = context.Request.Path.Value ?? string.Empty;
     var refer = context.Request.Headers["Referer"].ToString();
 
+    if(Debugger.IsAttached)
+    {
+        await next();
+        return;
+    }
+
     // VERIFICANDO SE A ORIGEM DE QUEM CHAMOU VEIO DO SWAGGER.
     if (!string.IsNullOrEmpty(refer) && refer.Contains("/swagger", StringComparison.OrdinalIgnoreCase))
     {
         await next();
         return;
     }
-    
+    else if (path.Contains("/ping"))
+    {
+        await next();
+        return;
+    }
+
     var origin = context.Request.Headers["Origin"].ToString(); //COM VALOR APENAS EM BROWSERS
     var apiKey = builder.Configuration["ApiSettings:ApiKey"];
     var apiSecret = builder.Configuration["ApiSettings:ApiSecret"];
@@ -85,7 +97,11 @@ app.Use(async (context, next) =>
        !context.Request.Headers.TryGetValue("X-API-SECRET", out var requestSecret) || requestSecret != apiSecret)
         {
             context.Response.StatusCode = StatusCodes.Status403Forbidden;
-            await context.Response.WriteAsync("Acesso não autorizado! X-API-KEY e X-API-SECRET não definidos.");
+            await context.Response.WriteAsync(@$"
+                Acesso não autorizado! X-API-KEY e X-API-SECRET não definidos.
+                Refer: {refer}, Path: {path}
+
+                ");
             return;
         }
     }

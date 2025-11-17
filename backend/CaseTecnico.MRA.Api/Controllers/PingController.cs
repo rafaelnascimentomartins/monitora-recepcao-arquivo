@@ -17,7 +17,7 @@ public class PingController : ControllerBase
     /// </remarks>
     /// <param></param>
     /// <returns>Retorna mensagem de Ok para conexão com Api.</returns>
-    [HttpGet]
+    [HttpGet("/ping")]
     public IActionResult Get()
     {
         return Ok("APLICAÇÃO ONLINE");
