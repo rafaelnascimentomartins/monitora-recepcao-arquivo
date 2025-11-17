@@ -28,6 +28,7 @@
               "node_modules/primeicons/primeicons.css",
               "src/styles.scss",
               "src/assets/stylesheets/datatables.css",
+              "src/assets/stylesheets/tabbar.css",
               "src/assets/stylesheets/layout.css"
             ],
             "scripts": []
