@@ -70,29 +70,29 @@ namespace CaseTecnico.MRA.Application.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Empresa: {0} deve conter uma quantidade de {1} caracteres..
+        /// </summary>
+        internal static string ArquivoImpEmpresaIncorretaQtd {
+            get {
+                return ResourceManager.GetString("ArquivoImpEmpresaIncorretaQtd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não possui a empresa no formato..
+        /// </summary>
+        internal static string ArquivoImpEmpresaInexistente {
+            get {
+                return ResourceManager.GetString("ArquivoImpEmpresaInexistente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Linha {0}: O campo {1} encontra-se inválido..
         /// </summary>
         internal static string ArquivoImpLinhaCampoInvalido {
             get {
                 return ResourceManager.GetString("ArquivoImpLinhaCampoInvalido", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Linha {0}: Identificado como empresa: {1} deve conter uma quantidade de {3} caracteres..
-        /// </summary>
-        internal static string ArquivoImpLinhaEmpresaIncorretaQtd {
-            get {
-                return ResourceManager.GetString("ArquivoImpLinhaEmpresaIncorretaQtd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Linha {0}: Não possui a empresa no formato..
-        /// </summary>
-        internal static string ArquivoImpLinhaEmpresaInexistente {
-            get {
-                return ResourceManager.GetString("ArquivoImpLinhaEmpresaInexistente", resourceCulture);
             }
         }
         
@@ -129,6 +129,15 @@ namespace CaseTecnico.MRA.Application.Common.Resources {
         internal static string CampoTamanhoMaxInvalido {
             get {
                 return ResourceManager.GetString("CampoTamanhoMaxInvalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empresa {0} não encontrada em nossa base.
+        /// </summary>
+        internal static string EmpresaInexistenteNaBase {
+            get {
+                return ResourceManager.GetString("EmpresaInexistenteNaBase", resourceCulture);
             }
         }
     }

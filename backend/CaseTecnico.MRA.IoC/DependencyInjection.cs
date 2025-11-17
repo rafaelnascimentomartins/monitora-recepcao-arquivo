@@ -1,7 +1,10 @@
-﻿using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivo;
+﻿using CaseTecnico.MRA.Application.Parsers;
+using CaseTecnico.MRA.Application.Parsers.Interfaces;
+using CaseTecnico.MRA.Application.UseCases.ArquivoNaoRecepcionados.GetArquivoNaoRecepcionadoDatatable;
+using CaseTecnico.MRA.Application.UseCases.ArquivoRecepcionados.GetArquivoRecepcionadoDatatable;
+using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivo;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDashResumoStatus;
-using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDatatable;
 using CaseTecnico.MRA.CrossCutting.Interfaces.Services;
 using CaseTecnico.MRA.Domain.Interfaces.Repositories;
 using CaseTecnico.MRA.Infrastructure.Context;
@@ -40,21 +43,23 @@ public static class DependencyInjection
         services.RegisterHandles();
         services.RegisterMappers();
         services.RegisterValidators();
+        services.RegisterParsers();
         return services;
     }
-
-   
+ 
     private static void RegisterRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IArquivoRepository, ArquivoRepository>();
+        services.AddScoped<IArquivoNaoRecepcionadoRepository, ArquivoNaoRecepcionadoRepository>();
+        services.AddScoped<IArquivoRecepcionadoRepository, ArquivoRecepcionadoRepository>();
         services.AddScoped<IEmpresaRepository, EmpresaRepository>();
         services.AddScoped<ILogErroRepository, LogErroRepository>();
     }
     private static void RegisterHandles(this IServiceCollection services)
     {
         services.AddScoped<CreateArquivoFromUploadHandler>();
-        services.AddScoped<GetArquivoDatatableHandler>();
-        services.AddScoped<GetArquivoDashResumoStatusHandler>();
+        //services.AddScoped<GetArquivoDashResumoStatusHandler>();
+        services.AddScoped<GetArquivoRecepcionadoDatatableHandler>();
+        services.AddScoped<GetArquivoNaoRecepcionadoDatatableHandler>();
     }
     private static void RegisterMappers(this IServiceCollection services)
     {
@@ -62,10 +67,14 @@ public static class DependencyInjection
     }
     private static void RegisterValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<CreateArquivoFromUploadDto>, CreateArquivoFromUploadValidator>();
+        services.AddScoped<IValidator<CreateArquivoFromUploadRecepcionadoDto>, CreateArquivoFromUploadValidator>();
     }
     private static void RegisterServices(this IServiceCollection services)
     {
         services.AddScoped<IFileEncryptionService, FileEncryptionService>();
+    }
+    private static void RegisterParsers(this IServiceCollection services)
+    {
+        services.AddScoped<IParserArquivo, ParserArquivo>();
     }
 }

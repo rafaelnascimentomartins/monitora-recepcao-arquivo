@@ -1,16 +1,17 @@
-﻿using CaseTecnico.MRA.Domain.Entities;
+﻿
+using CaseTecnico.MRA.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CaseTecnico.MRA.Infrastructure.Configurations;
 
-public sealed class ArquivoConfiguration : BaseEntityConfiguration<Arquivo>
+public class ArquivoRecepcionadoConfiguration : BaseEntityConfiguration<ArquivoRecepcionado>
 {
-    public override void Configure(EntityTypeBuilder<Arquivo> builder)
+    public override void Configure(EntityTypeBuilder<ArquivoRecepcionado> builder)
     {
         base.Configure(builder);
 
-        builder.ToTable("Arquivos");
+        builder.ToTable("ArquivoRecepcionados");
 
         builder.Property(x => x.Estabelecimento)
              .HasMaxLength(20)
@@ -36,14 +37,10 @@ public sealed class ArquivoConfiguration : BaseEntityConfiguration<Arquivo>
             .HasMaxLength(50)
             .IsRequired();
 
-        builder.HasOne(x => x.ArquivoStatus)
-       .WithMany(s => s.Arquivos)  // COLLECTION Arquivos dentro da classe para busca inversa (se necessário)
-       .HasForeignKey(x => x.ArquivoStatusId)
-       .IsRequired();
-
         builder.HasOne(x => x.Empresa)
-               .WithMany(e => e.Arquivos) // COLLECTION Arquivos dentro da classe para busca inversa (se necessário)
-               .HasForeignKey(x => x.EmpresaId)
-               .IsRequired();
+              .WithMany(e => e.ArquivoRecepcionados) // COLLECTION Arquivos dentro da classe para busca inversa (se necessário)
+              .HasForeignKey(x => x.EmpresaId)
+              .IsRequired();
+
     }
 }
