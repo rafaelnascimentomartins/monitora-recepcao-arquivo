@@ -3,9 +3,6 @@ using AutoMapper;
 using CaseTecnico.MRA.Application.UseCases.ArquivoNaoRecepcionados.GetArquivoNaoRecepcionadoDatatable;
 using CaseTecnico.MRA.Application.UseCases.ArquivoRecepcionados.GetArquivoRecepcionadoDatatable;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
-using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDashResumoStatus;
-using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDatatable;
-using CaseTecnico.MRA.Domain.Common.Models;
 using CaseTecnico.MRA.Domain.Entities;
 
 namespace CaseTecnico.MRA.Application.Mappings;
@@ -28,7 +25,5 @@ public class ArquivoMappingProfile : Profile
         //ArquivoNaoRecepcionado
         CreateMap<CreateArquivoFromUploadNaoRecepcionadoDto, ArquivoNaoRecepcionado>();
         CreateMap<ArquivoNaoRecepcionado, GetArquivoNaoRecepcionadoDatatableDto>();
-
-        CreateMap<ArquivoResumoStatusModel, GetArquivoDashResumoStatusDto>();
     }
 }

@@ -1,14 +1,16 @@
-﻿using CaseTecnico.MRA.Application.Parsers;
-using CaseTecnico.MRA.Application.Parsers.Interfaces;
+﻿using CaseTecnico.MRA.Application.Interfaces.Parsers;
+using CaseTecnico.MRA.Application.Parsers;
 using CaseTecnico.MRA.Application.UseCases.ArquivoNaoRecepcionados.GetArquivoNaoRecepcionadoDatatable;
 using CaseTecnico.MRA.Application.UseCases.ArquivoRecepcionados.GetArquivoRecepcionadoDatatable;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivo;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
-using CaseTecnico.MRA.Application.UseCases.Arquivos.GetArquivoDashResumoStatus;
+using CaseTecnico.MRA.Application.UseCases.Dashboards.GetDashArquivoResumoStatus;
 using CaseTecnico.MRA.CrossCutting.Interfaces.Services;
 using CaseTecnico.MRA.Domain.Interfaces.Repositories;
+using CaseTecnico.MRA.Domain.Interfaces.Repositories.Dashboards;
 using CaseTecnico.MRA.Infrastructure.Context;
 using CaseTecnico.MRA.Infrastructure.Repositories;
+using CaseTecnico.MRA.Infrastructure.Repositories.Dashboards;
 using CaseTecnico.MRA.Infrastructure.Services;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -53,11 +55,13 @@ public static class DependencyInjection
         services.AddScoped<IArquivoRecepcionadoRepository, ArquivoRecepcionadoRepository>();
         services.AddScoped<IEmpresaRepository, EmpresaRepository>();
         services.AddScoped<ILogErroRepository, LogErroRepository>();
+
+        services.AddScoped<IDashboardArquivoRepository, DashboardArquivoRepository>();
     }
     private static void RegisterHandles(this IServiceCollection services)
     {
         services.AddScoped<CreateArquivoFromUploadHandler>();
-        //services.AddScoped<GetArquivoDashResumoStatusHandler>();
+        services.AddScoped<GetDashArquivoResumoStatusHandler>();
         services.AddScoped<GetArquivoRecepcionadoDatatableHandler>();
         services.AddScoped<GetArquivoNaoRecepcionadoDatatableHandler>();
     }

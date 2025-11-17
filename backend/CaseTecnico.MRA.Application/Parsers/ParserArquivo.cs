@@ -1,5 +1,5 @@
 ﻿using CaseTecnico.MRA.Application.Common.Resources;
-using CaseTecnico.MRA.Application.Parsers.Interfaces;
+using CaseTecnico.MRA.Application.Interfaces.Parsers;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
 using CaseTecnico.MRA.CrossCutting.Utils;
 using CaseTecnico.MRA.Domain.Entities;
