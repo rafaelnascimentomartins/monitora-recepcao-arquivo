@@ -1,0 +1,10 @@
+:root {
+
+  /* DATATABLES */
+  --p-datatable-header-cell-selected-background: var(--mra-color-primary);
+  --p-datatable-header-cell-selected-color: #ffffff; /* texto branco */
+  --p-paginator-nav-button-selected-background: var(--mra-color-primary);
+  --p-paginator-nav-button-selected-color: #ffffff;
+  
+  /**/
+}
