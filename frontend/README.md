@@ -1,5 +1,4 @@
 # Sobre
-Projeto de automação de upload de arquivos externos padronizados para processamento interno e consulta via portal Web.
 
 Especificação Técnica:
 
@@ -48,7 +47,7 @@ GitHub -> Code<> -> Commits.
 
 ## Clonei o projeto e quero executar localmente sem Docker
 
-Neste caso será necessário ter o Visual Studio Code, Node instalado.
+Neste caso será necessário ter o Node instalado.
 
 1) Abrir o projeto via plataforma Visual Studio Code
 2) Abrir o arquivo environment.ts dentro da pasta `src/app/environment`
@@ -60,7 +59,6 @@ Neste caso será necessário ter o Visual Studio Code, Node instalado.
 
 ## Clonei e quero executar via Docker compose
 
-Neste caso não precisa de Visual Studio Code e Node instalado na máquina.
+Neste caso não precisa do Node instalado na máquina.
 
-1) Clone este projeto: https://github.com/rafaelnascimentomartins/monitora-recepcao-arquivo-infra
-2) Execute os passos do README.md do repositório Infra.
+Observe a documentação do README.md em: https://github.com/rafaelnascimentomartins/monitora-recepcao-arquivo.

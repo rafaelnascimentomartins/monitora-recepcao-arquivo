@@ -1,0 +1,40 @@
+version: "3.9"  # versão do docker-compose
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver2022
+    environment:
+      SA_PASSWORD: "MRASenhaCT#181125!" # senha do SA
+      ACCEPT_EULA: "Y"              # aceite do EULA obrigatório
+    ports:
+      - "1433:1433"                 # expõe porta do SQL no host
+    networks:
+      - app-network                 # conecta à rede interna dos containers
+
+  backend:
+    build:
+      context: ./backend   # caminho para o Dockerfile da API
+      dockerfile: CaseTecnico.MRA.Api/Dockerfile
+    container_name: backend-api
+    depends_on:
+      - sqlserver                   # espera o SQL iniciar primeiro
+    environment:
+      ConnectionStrings__MRAConnection: "Server=sqlserver,1433;Database=MRA;User Id=sa;Password=MRASenhaCT#181125!;TrustServerCertificate=True"
+    ports:
+      - "5163:5163"                 # expõe API para host
+    networks:
+      - app-network                 # mesma rede para comunicação interna
+
+  frontend:
+    build:
+      context: ./frontend  # caminho para o Dockerfile do Angular
+      dockerfile: Dockerfile
+    container_name: frontend-app
+    ports:
+      - "4200:80"                   # expõe Nginx em 4200
+    networks:
+      - app-network                 # mesma rede, pode comunicar com backend
+
+networks:
+  app-network:                      # define rede interna para
