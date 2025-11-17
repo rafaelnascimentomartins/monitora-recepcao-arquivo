@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ArquivoService } from '../../services/arquivo.service';
 import { Subject, takeUntil } from 'rxjs';
-import { GetArquivoDashResumoStatusResponse } from '../../models/responses/get-arquivo-dash-resumo-status-response.model';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ChartPieComponent } from '../../../../shared/components/charts/chart-pie/chart-pie.component';
@@ -10,6 +9,8 @@ import { ChartPieItem } from '../../../../core/interfaces/chart-pie-item.interfa
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
 import { RoutesEnum } from '../../../../core/enums/routes.enum';
+import { GetDashArquivoResumoStatusResponse } from '../../models/responses/get-dash-arquivo-resumo-status-response';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard-resumo-status',
@@ -57,7 +58,8 @@ export class DashboardResumoStatusComponent implements OnInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private arquivoService: ArquivoService) {}
+    private arquivoService: ArquivoService,
+    private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
     this.breadcrumbItems = [
@@ -78,17 +80,23 @@ export class DashboardResumoStatusComponent implements OnInit {
   }
 
   private buscarResumoStatus() : void {    
-    this.arquivoService.getDashResumoStatus()
+    this.dashboardService.getResumoStatus()
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: (res: GetArquivoDashResumoStatusResponse) => {
-            this.pieData = (res.data || []).map(x => ({
-            label: x.arquivoStatusDescricao ?? '',
-            value: x.count ?? 0
-          }));
+          next: (res: GetDashArquivoResumoStatusResponse) => {
 
-          this.pieData = [...this.pieData]; // necessário para OnPush
-          this.total = res.total ?? 0;
+            this.pieData = [
+              {
+                label: 'Recepcionados',
+                value: res.qtdRecepcionados ?? 0
+              },
+              {
+                label: 'Não Recepcionados',
+                value: res.qtdNaoRecepcionados ?? 0
+              },
+            ];
+            this.pieData = [...this.pieData]; // necessário para OnPush
+            this.total = (res.qtdRecepcionados ?? 0) + (res.qtdNaoRecepcionados ?? 0);
           },
           complete: () => {
             this.cdr.markForCheck();

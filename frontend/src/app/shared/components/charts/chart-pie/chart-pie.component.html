@@ -1,15 +1,17 @@
 <p-card [header]="title">
   
-  <div class="flex justify-between items-center mb-3" *ngIf="total">
-    
-    @if(total)
-    {
+  @if (total) {
+  <div class="flex justify-between items-center mb-3" >
     <div class="text-lg font-semibold">
         Total: <span class="font-bold">{{ total }}</span>
     </div>
-    }
-    
   </div>
+  }
+  @else {
+    <div class="text-lg font-semibold">
+        Total: <span class="font-bold">Nenhum registro encontrado.</span>
+    </div>
+  }
 
   <div style="height: 350px;">
     <p-chart type="pie" [data]="pieData" [options]="pieOptions"></p-chart>

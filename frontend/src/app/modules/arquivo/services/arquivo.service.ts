@@ -3,13 +3,13 @@ import { BaseService } from "../../../core/services/base.service";
 import { environment } from "../../../environment/environment";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { GetArquivoDashResumoStatusResponse } from "../models/responses/get-arquivo-dash-resumo-status-response.model";
 import { ToastService } from "../../../core/services/toast.service";
 import { GetArquivoRecepcionadoDatatableRequest } from "../models/requests/get-arquivo-recepcionado-datatable-request";
 import { GetArquivoRecepcionadoDatatableDto } from "../models/dtos/get-arquivo-recepcionado-datatable.dto";
 import { GetArquivoRecepcionadoDatatableResponse } from "../models/responses/get-arquivo-recepcionado-datatable-response";
 import { GetArquivoNaoRecepcionadoDatatableRequest } from "../models/requests/get-arquivo-nao-recepcionado-datatable-request";
 import { GetArquivoNaoRecepcionadoDatatableResponse } from "../models/responses/get-arquivo-nao-recepcionado-datatable-response";
+import { GetDashArquivoResumoStatusResponse } from "../models/responses/get-dash-arquivo-resumo-status-response";
 
 @Injectable({
   providedIn: 'root' // ou omitido se você quiser scoped service na feature
@@ -51,12 +51,6 @@ export class ArquivoService extends BaseService {
     
         return this.handleRequest(
             this.http.get<GetArquivoNaoRecepcionadoDatatableResponse>(`${this.baseUrl}/GetNaoRecepcionadoDatatable`, {params})
-        );
-    }
-
-    getDashResumoStatus() : Observable<GetArquivoDashResumoStatusResponse> {
-        return this.handleRequest(
-            this.http.get<GetArquivoDashResumoStatusResponse>(`${this.baseUrl}/GetDashResumoStatus`)
         );
     }
 }
