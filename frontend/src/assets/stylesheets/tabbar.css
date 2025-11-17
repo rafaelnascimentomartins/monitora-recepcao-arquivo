@@ -1,0 +1,5 @@
+:root {
+    --p-tabs-tab-active-background: var(--mra-color-primary);
+    --p-tabs-tab-active-border-color: var(--mra-color-primary);
+    --p-tabs-tab-active-color: white;
+}

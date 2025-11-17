@@ -1,5 +1,5 @@
-export class GetArquivoDatatableDto {
-    identificador: string = '';
+export class GetArquivoRecepcionadoDatatableDto {
+     identificador: string = '';
     dataInsercao?: Date;
     estabelecimento?:string;
     dataProcessamento?: Date;
@@ -7,5 +7,4 @@ export class GetArquivoDatatableDto {
     periodoFinal?: Date;
     sequencia?:string;
     empresaDescricao?:string;
-    arquivoStatusDescricao?:string;
 }

@@ -3,10 +3,42 @@
   <h1 class="page-title">Lista de arquivos</h1>
 </div>
 
-<app-datatable
+<p-tabs [(value)]="activeValue">
+  <p-tablist>
+    <p-tab value="recep">Recepcionados</p-tab>
+    <p-tab value="nao-recep">Não Recepcionados</p-tab>
+  </p-tablist>
+
+  <p-tabpanels>
+    <p-tabpanel value="recep">
+      <app-datatable
+        [data]="arquivosRecepcionados"
+        [loading]="flagLoadingRecepcionados"
+        [totalRecords]="totalRecepcionadosRecords"
+        [columns]="columnsRecepcionados"
+        (lazyLoad)="onLazyLoadRecepcionados($event)" 
+      />
+
+    </p-tabpanel>
+
+    <p-tabpanel value="nao-recep">
+       <app-datatable
+        [data]="arquivosNaoRecepcionados"
+        [loading]="flagLoadingNaoRecepcionados"
+        [totalRecords]="totalNaoRecepcionadosRecords"
+        [columns]="columnsNaoRecepcionados"
+        (lazyLoad)="onLazyLoadNaoRecepcionados($event)" 
+      />
+    </p-tabpanel>
+  </p-tabpanels>
+</p-tabs>
+
+
+
+  <!-- <app-datatable
     [data]="arquivos"
     [loading]="flagLoadingLista"
     [totalRecords]="totalRecords"
     [columns]="columns"
-    (lazyLoad)="onLazyLoad($event)" 
-  />
+    (lazyLoad)="onLazyLoadRecepcionados($event)" 
+  /> -->

@@ -1,16 +1,20 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ArquivoService } from '../../services/arquivo.service';
-import { GetArquivoDatatableRequest } from '../../models/requests/get-arquivo-datatable-request.model';
 import { Subject, takeUntil } from 'rxjs';
-import { LazyLoadEvent, MenuItem } from 'primeng/api';
-import { GetArquivoDatatableResponse } from '../../models/responses/get-arquivo-datatable-response.model';
-import { GetArquivoDatatableDto } from '../../models/dtos/get-arquivo-datatable.dto';
+import { MenuItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { DatatableComponent } from '../../../../shared/components/datatable/datatable.component';
 import { DatatableLazy } from '../../../../core/interfaces/datatable-lazy.interface';
 import { DatatableColumn } from '../../../../core/models/datatable-column.model';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { RoutesEnum } from '../../../../core/enums/routes.enum';
+import { GetArquivoRecepcionadoDatatableResponse } from '../../models/responses/get-arquivo-recepcionado-datatable-response';
+import { GetArquivoRecepcionadoDatatableRequest } from '../../models/requests/get-arquivo-recepcionado-datatable-request';
+import { GetArquivoRecepcionadoDatatableDto } from '../../models/dtos/get-arquivo-recepcionado-datatable.dto';
+import { TabsModule } from 'primeng/tabs';
+import { GetArquivoNaoRecepcionadoDatatableDto } from '../../models/dtos/get-arquivo-nao-recepcionado-datatable.dto';
+import { GetArquivoNaoRecepcionadoDatatableRequest } from '../../models/requests/get-arquivo-nao-recepcionado-datatable-request';
+import { GetArquivoNaoRecepcionadoDatatableResponse } from '../../models/responses/get-arquivo-nao-recepcionado-datatable-response';
 
 @Component({
   selector: 'app-lista-arquivo',
@@ -18,7 +22,8 @@ import { RoutesEnum } from '../../../../core/enums/routes.enum';
   imports: [
     CommonModule, 
     DatatableComponent,
-    Breadcrumb
+    Breadcrumb,
+    TabsModule
   ],
   templateUrl: './lista-arquivo.component.html',
   styleUrls: ['./lista-arquivo.component.css'],
@@ -30,28 +35,29 @@ export class ListaArquivoComponent implements OnInit, OnDestroy  {
   private destroy$ = new Subject<void>();
 
   //FLAGS
-  flagLoadingLista: boolean = false;
+  flagLoadingRecepcionados: boolean = false;
+  flagLoadingNaoRecepcionados: boolean = false;
 
   //VARIÁVEIS
-  arquivos: GetArquivoDatatableDto[] = [];
-  columns: DatatableColumn[] = [
+  arquivosRecepcionados: GetArquivoRecepcionadoDatatableDto[] = [];
+  arquivosNaoRecepcionados: GetArquivoNaoRecepcionadoDatatableDto[] = [];
+  columnsRecepcionados: DatatableColumn[] = [
     { field: 'dataInsercao', title: 'Data Importação' },
     { field: 'empresaDescricao', title: 'Empresa' },
-    { field: 'arquivoStatusDescricao', title: 'Status', 
-      type: 'tag', 
-      tagColors: {
-        'Recepcionado': 'success',
-        'Não Recepcionado': 'info'
-      } 
-    },
     { field: 'dataProcessamento', title: 'Data proc.' },
     { field: 'estabelecimento', title: 'Estabelecimento' },
     { field: 'sequencia', title: 'Sequencia' },
     { field: 'periodoInicial', title: 'Período inicial' },
     { field: 'periodoFinal', title: 'Período final' },
   ];
+   columnsNaoRecepcionados: DatatableColumn[] = [
+    { field: 'estruturaImportada', title: 'Arquivo importação' },
+    { field: 'motivos', title: 'Motivos' },
+  ];
   breadcrumbItems: MenuItem[] = [];
-  totalRecords: number= 0;
+  totalRecepcionadosRecords: number= 0;
+  totalNaoRecepcionadosRecords: number= 0;
+  activeValue = 'recep';
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -71,31 +77,55 @@ export class ListaArquivoComponent implements OnInit, OnDestroy  {
     this.destroy$.complete();
   }
 
-  onLazyLoad(event: DatatableLazy) {
-    this.flagLoadingLista = true;
+  onLazyLoadRecepcionados(event: DatatableLazy) {
+    this.flagLoadingRecepcionados = true;
     this.cdr.markForCheck();
 
     // Monta a requisição baseada no LazyLoadEvent
-    const request = new GetArquivoDatatableRequest();
+    const request = new GetArquivoRecepcionadoDatatableRequest();
     request.page = event.page;
     request.pageSize = event.pageSize;
     request.sortDirection = event.sortDirection;
     request.sortField = event.sortField;
 
-    this.arquivoService.getDatatable(request)
+    this.arquivoService.getRecepcionadosDatatable(request)
     .pipe(takeUntil(this.destroy$))
     .subscribe({
-      next: (res: GetArquivoDatatableResponse) => {
-        this.arquivos = [...(res.data ?? [])];
-        this.totalRecords = res.totalRecords ?? 0;  // ← AQUI DEFINIMOS O TOTAL
+      next: (res: GetArquivoRecepcionadoDatatableResponse) => {
+        this.arquivosRecepcionados = [...(res.data ?? [])];
+        this.totalRecepcionadosRecords = res.totalRecords ?? 0;  // ← AQUI DEFINIMOS O TOTAL
       },
       complete: () => {
-        this.flagLoadingLista = false;
+        this.flagLoadingRecepcionados = false;
         this.cdr.markForCheck();
       }
     });
   }
 
+  onLazyLoadNaoRecepcionados(event: DatatableLazy) {
+    this.flagLoadingNaoRecepcionados = true;
+    this.cdr.markForCheck();
+
+    // Monta a requisição baseada no LazyLoadEvent
+    const request = new GetArquivoNaoRecepcionadoDatatableRequest();
+    request.page = event.page;
+    request.pageSize = event.pageSize;
+    request.sortDirection = event.sortDirection;
+    request.sortField = event.sortField;
+
+    this.arquivoService.getNaoRecepcionadosDatatable(request)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (res: GetArquivoNaoRecepcionadoDatatableResponse) => {
+        this.arquivosNaoRecepcionados = [...(res.data ?? [])];
+        this.totalNaoRecepcionadosRecords = res.totalRecords ?? 0;  // ← AQUI DEFINIMOS O TOTAL
+      },
+      complete: () => {
+        this.flagLoadingNaoRecepcionados = false;
+        this.cdr.markForCheck();
+      }
+    });
+  }
   // private buscarLista() : void {
   //   this.flagLoadingLista = true;
 
