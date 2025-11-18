@@ -10,6 +10,7 @@ Project Type: Class Library
 ----------------------------------------------
 Breve descrição do projeto:
 - Objetivo: Armazenamento de Entidades ( Cópias tabelas banco ), Enums e Interfaces. 
+Observação importante: Não conhece nada externo!
 - Dep. project: N/A 
 - Tecnologias principais: .NET 9
 

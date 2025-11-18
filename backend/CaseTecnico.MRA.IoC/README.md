@@ -19,4 +19,6 @@ Breve descrição do projeto:
 
 /BackEnd
  ├── CaseTecnico.MRA.IoC
- │    ├── DependencyInjection
+ │    ├── DependencyInjection - (composition root) registro de dependências, para
+                                manter a composição da lógica separada, permitir substituir 
+                                implementações em testes ou por diferentes infraestruturas.

@@ -124,8 +124,9 @@ public class CreateArquivoFromUploadHandler
         // Salvar arquivo encriptado
         await _fileService.SaveEncryptedAsync(
             request.ArquivoStream,
-            _settings.FileEncryption.DestinationPath!,
-            _settings.FileEncryption.FileKey!);
+            request.FileName,
+            _settings.FileEncryption.FileKey!,
+            _settings.FileEncryption.DestinationPath!);
 
         return response;
     }
