@@ -59,6 +59,8 @@ public class ArquivoController : ControllerBase
     /// se o documento anexado possui a extensão .txt, contém registros e valida o formato.
     /// Após essas análises ele será executa o processo de inserção no banco de dados.
     /// 
+    /// O arquivo em questão é salvo na raiz do projeto encrypted.
+    /// 
     /// Acesso via Postman: Headers -> appsettings config header: X-API-KEY e X-API-SECRET | Body -> form-data Key File
     /// </remarks>
     /// <param name="requestDtoApi">Classe UploadArquivoRequest com único campo arquivo (IFormFile) </param>
