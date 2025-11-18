@@ -1,0 +1,10 @@
+*.Dockerfile
+Dockerfile
+**/Dockerfile
+obj/
+bin/
+*.md
+*.txt
+*.user
+*.suo
+*.vs

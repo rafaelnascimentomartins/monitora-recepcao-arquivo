@@ -127,7 +127,7 @@
     <value>O arquivo importado encontra-se vazio.</value>
   </data>
   <data name="ArquivoImpEmpresaInexistente" xml:space="preserve">
-    <value>Não possui a empresa no formato.</value>
+    <value>A empresa informada não existe em nossa base.</value>
   </data>
   <data name="ArquivoImpLinhaCampoInvalido" xml:space="preserve">
     <value>Linha {0}: O campo {1} encontra-se inválido.</value>
@@ -143,5 +143,14 @@
   </data>
   <data name="EmpresaInexistenteNaBase" xml:space="preserve">
     <value>Empresa {0} não encontrada em nossa base</value>
+  </data>
+  <data name="ArquivoEstruturaNaoDefinida" xml:space="preserve">
+    <value>Estrutura não encontrada</value>
+  </data>
+  <data name="ArquivoEstruturaMaxLength" xml:space="preserve">
+    <value>A estrutura para cada empresa deve possuir no máximo {0} caracteres por linha</value>
+  </data>
+  <data name="ArquivoImpLinhaEstruturaMaxAtingido" xml:space="preserve">
+    <value>A linha {0} possui uma estrutura acima do permitido de 50 caracteres.</value>
   </data>
 </root>

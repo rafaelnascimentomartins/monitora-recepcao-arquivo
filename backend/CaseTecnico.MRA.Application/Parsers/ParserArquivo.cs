@@ -9,11 +9,15 @@ namespace CaseTecnico.MRA.Application.Parsers;
 
 public class ParserArquivo : IParserArquivo
 {
-    private readonly IValidator<CreateArquivoFromUploadRecepcionadoDto> _validator;
+    private readonly IValidator<CreateArquivoFromUploadRecepcionadoDto> _validRecebido;
+    
 
-    public ParserArquivo(IValidator<CreateArquivoFromUploadRecepcionadoDto> validator)
+    public ParserArquivo(
+        IValidator<CreateArquivoFromUploadRecepcionadoDto> validRecebido,
+        IValidator<CreateArquivoFromUploadNaoRecepcionadoDto> validNaoRecebido)
     {
-        _validator = validator;
+        _validRecebido = validRecebido;
+        
     }
 
     public async Task<CreateArquivoFromUploadParserDto> ParseAsync(string linha, int sequencia, Dictionary<string, Empresa> empresasNoTrack)
@@ -61,7 +65,7 @@ public class ParserArquivo : IParserArquivo
             linhaNotOk.AddNewMotivo(erroLines);
         else
         {
-            var validationResult = await _validator.ValidateAsync(linhaOk);
+            var validationResult = await _validRecebido.ValidateAsync(linhaOk);
             if (!validationResult.IsValid)
             {
                 foreach (var e in validationResult.Errors)

@@ -61,6 +61,24 @@ namespace CaseTecnico.MRA.Application.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A estrutura para cada empresa deve possuir no máximo {0} caracteres por linha.
+        /// </summary>
+        internal static string ArquivoEstruturaMaxLength {
+            get {
+                return ResourceManager.GetString("ArquivoEstruturaMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estrutura não encontrada.
+        /// </summary>
+        internal static string ArquivoEstruturaNaoDefinida {
+            get {
+                return ResourceManager.GetString("ArquivoEstruturaNaoDefinida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O arquivo importado deve conter a etensão .txt.
         /// </summary>
         internal static string ArquivoImpDeveConterExtensaoTXT {
@@ -79,7 +97,7 @@ namespace CaseTecnico.MRA.Application.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não possui a empresa no formato..
+        ///   Looks up a localized string similar to A empresa informada não existe em nossa base..
         /// </summary>
         internal static string ArquivoImpEmpresaInexistente {
             get {
@@ -93,6 +111,15 @@ namespace CaseTecnico.MRA.Application.Common.Resources {
         internal static string ArquivoImpLinhaCampoInvalido {
             get {
                 return ResourceManager.GetString("ArquivoImpLinhaCampoInvalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A linha {0} possui uma estrutura acima do permitido de 50 caracteres..
+        /// </summary>
+        internal static string ArquivoImpLinhaEstruturaMaxAtingido {
+            get {
+                return ResourceManager.GetString("ArquivoImpLinhaEstruturaMaxAtingido", resourceCulture);
             }
         }
         

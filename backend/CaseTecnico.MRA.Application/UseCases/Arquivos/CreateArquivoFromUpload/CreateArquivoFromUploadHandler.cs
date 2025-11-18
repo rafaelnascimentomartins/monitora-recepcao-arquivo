@@ -17,9 +17,9 @@ public class CreateArquivoFromUploadHandler
     private readonly IArquivoRecepcionadoRepository _arquivoRecepcionadoRepo;
     private readonly IArquivoNaoRecepcionadoRepository _arquivoNaoRecepcionadoRepo;
     private readonly IEmpresaRepository _empresaRepo;
-    private readonly IValidator<CreateArquivoFromUploadRecepcionadoDto> _validator;
     private readonly IFileEncryptionService _fileService;
     private readonly IParserArquivo _parse;
+    private readonly IValidator<CreateArquivoFromUploadNaoRecepcionadoDto> _validNaoRecebido;
     private readonly AppSettings _settings;
     private Dictionary<string, Empresa>? empresasNoTrack;
 
@@ -30,17 +30,17 @@ public class CreateArquivoFromUploadHandler
         IEmpresaRepository empresaRepo,
         IFileEncryptionService fileService,
         IParserArquivo parse,
-        IValidator<CreateArquivoFromUploadRecepcionadoDto> validator,
+        IValidator<CreateArquivoFromUploadNaoRecepcionadoDto> validNaoRecebido,
         AppSettings settings)
     {
         _mapper = mapper;
         _arquivoRecepcionadoRepo = arquivoRecepcionadoRepo;
         _arquivoNaoRecepcionadoRepo = arquivoNaoRecepcionadoRepo;
         _empresaRepo = empresaRepo;
-        _validator = validator;
         _fileService = fileService;
         _settings = settings;
         _parse = parse;
+        _validNaoRecebido = validNaoRecebido;
     }
 
     public async Task<CreateArquivoFromUploadResponse> Handle(
@@ -87,12 +87,27 @@ public class CreateArquivoFromUploadHandler
             if (resultadoLinha.Valido)
                 linhasDto.Recepcionados.Add(resultadoLinha.Recepcionado!);
             else
+            {
                 linhasDto.NaoRecepcionados.Add(resultadoLinha.NaoRecepcionado!);
 
+                var validationResult = await _validNaoRecebido.ValidateAsync(resultadoLinha.NaoRecepcionado!);
+                if (!validationResult.IsValid)
+                {
+                    response.Sucesso = false;
+                    response.Mensagens.Add(
+                        string.Format(ValidationMessages.ArquivoImpLinhaEstruturaMaxAtingido, sequencia)
+                    );
+                    break;
+                }
+            }
+             
             sequencia++;
         }
 
-        if(linhasDto.NaoRecepcionados.Any())
+        if(!response.Sucesso)
+            return response;
+
+        if (linhasDto.NaoRecepcionados.Any())
         {
             var modelMapper = _mapper.Map<List<ArquivoNaoRecepcionado>>(linhasDto.NaoRecepcionados);
 
@@ -105,7 +120,6 @@ public class CreateArquivoFromUploadHandler
 
             await _arquivoRecepcionadoRepo.InsertRangeAsync(modelMapper, cancellationToken);
         }
-
 
         // Salvar arquivo encriptado
         await _fileService.SaveEncryptedAsync(

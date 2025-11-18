@@ -1,13 +1,12 @@
-﻿
-using CaseTecnico.MRA.Application.Common.Resources;
+﻿using CaseTecnico.MRA.Application.Common.Resources;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
 using FluentValidation;
 
-namespace CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivo;
+namespace CaseTecnico.MRA.Application.UseCases.Arquivos.Validators;
 
-public class CreateArquivoFromUploadValidator : AbstractValidator<CreateArquivoFromUploadRecepcionadoDto>
+public class CreateArquivoFormUploadRecepcionadoValidator : AbstractValidator<CreateArquivoFromUploadRecepcionadoDto>
 {
-    public CreateArquivoFromUploadValidator()
+    public CreateArquivoFormUploadRecepcionadoValidator()
     {
         RuleFor(x => x.DataProcessamento)
            .Must(BeAValidDate).WithMessage(
@@ -33,8 +32,8 @@ public class CreateArquivoFromUploadValidator : AbstractValidator<CreateArquivoF
             .MaximumLength(20).WithMessage(string.Format(ValidationMessages.CampoTamanhoMaxInvalido, "Sequencia", 20));
 
         RuleFor(x => x.EstruturaImportada)
-            .NotEmpty().WithMessage(string.Format(ValidationMessages.CampoObrigatorio, "EstruturaObject"))
-            .MaximumLength(50).WithMessage(string.Format(ValidationMessages.CampoTamanhoMaxInvalido, "EstruturaObject", 50));
+            .NotEmpty().WithMessage(string.Format(ValidationMessages.ArquivoEstruturaNaoDefinida))
+            .MaximumLength(50).WithMessage(string.Format(ValidationMessages.ArquivoEstruturaMaxLength, 50));
     }
 
     private bool BeAValidDate(DateTime date)
