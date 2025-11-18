@@ -76,7 +76,9 @@ app.Use(async (context, next) =>
     }
 
     // VERIFICANDO SE A ORIGEM DE QUEM CHAMOU VEIO DO SWAGGER.
-    if (!string.IsNullOrEmpty(refer) && refer.Contains("/swagger", StringComparison.OrdinalIgnoreCase))
+    if (!string.IsNullOrEmpty(refer) && refer.Contains("/swagger", StringComparison.OrdinalIgnoreCase)
+    || !string.IsNullOrEmpty(path) && path.Contains("/swagger", StringComparison.OrdinalIgnoreCase))
+
     {
         await next();
         return;
@@ -98,10 +100,7 @@ app.Use(async (context, next) =>
         {
             context.Response.StatusCode = StatusCodes.Status403Forbidden;
             await context.Response.WriteAsync(@$"
-                Acesso não autorizado! X-API-KEY e X-API-SECRET não definidos.
-                Refer: {refer}, Path: {path}
-
-                ");
+                Acesso nao autorizado! X-API-KEY e X-API-SECRET nao definidos.");
             return;
         }
     }

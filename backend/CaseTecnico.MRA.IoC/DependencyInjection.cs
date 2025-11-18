@@ -2,8 +2,8 @@
 using CaseTecnico.MRA.Application.Parsers;
 using CaseTecnico.MRA.Application.UseCases.ArquivoNaoRecepcionados.GetArquivoNaoRecepcionadoDatatable;
 using CaseTecnico.MRA.Application.UseCases.ArquivoRecepcionados.GetArquivoRecepcionadoDatatable;
-using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivo;
 using CaseTecnico.MRA.Application.UseCases.Arquivos.CreateArquivoFromUpload;
+using CaseTecnico.MRA.Application.UseCases.Arquivos.Validators;
 using CaseTecnico.MRA.Application.UseCases.Dashboards.GetDashArquivoResumoStatus;
 using CaseTecnico.MRA.CrossCutting.Interfaces.Services;
 using CaseTecnico.MRA.Domain.Interfaces.Repositories;
@@ -71,7 +71,8 @@ public static class DependencyInjection
     }
     private static void RegisterValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<CreateArquivoFromUploadRecepcionadoDto>, CreateArquivoFromUploadValidator>();
+        services.AddScoped<IValidator<CreateArquivoFromUploadRecepcionadoDto>, CreateArquivoFormUploadRecepcionadoValidator>();
+        services.AddScoped<IValidator<CreateArquivoFromUploadNaoRecepcionadoDto>, CreateArquivoFormUploadNaoRecepcionadoValidator>();
     }
     private static void RegisterServices(this IServiceCollection services)
     {
