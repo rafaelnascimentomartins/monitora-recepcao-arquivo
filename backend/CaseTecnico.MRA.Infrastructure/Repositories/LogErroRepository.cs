@@ -7,7 +7,7 @@ namespace CaseTecnico.MRA.Infrastructure.Repositories;
 
 public class LogErroRepository : BaseRepository<LogErro>, ILogErroRepository
 {
-    public LogErroRepository(AppDbContext context)
+    public LogErroRepository(IAppDbContext context)
         : base(context)
     {
     }

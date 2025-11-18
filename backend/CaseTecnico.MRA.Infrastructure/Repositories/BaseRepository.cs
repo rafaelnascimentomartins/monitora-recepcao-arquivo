@@ -8,14 +8,22 @@ namespace CaseTecnico.MRA.Infrastructure.Repositories;
 public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     where TEntity : BaseEntity
 {
-    protected readonly AppDbContext _context;
+    //COMENTADO POIS AGORA USA IAppDbContext: Informação do uso dentro do próprio file
+    //protected readonly AppDbContext _context;
+    protected readonly IAppDbContext _context;
     protected readonly DbSet<TEntity> _dbSet;
 
-    public BaseRepository(AppDbContext context)
+    public BaseRepository(IAppDbContext context)
     {
         _context = context;
-        _dbSet = context.Set<TEntity>();
+        _dbSet = _context.Set<TEntity>();
     }
+    //COMENTADO POIS AGORA USA IAppDbContext: Informação do uso dentro do próprio file
+    //public BaseRepository(AppDbContext context)
+    //{
+    //    _context = context;
+    //    _dbSet = context.Set<TEntity>();
+    //}
 
     public virtual async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default)
     {

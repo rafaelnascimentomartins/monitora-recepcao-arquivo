@@ -121,7 +121,7 @@
     <value>Empresa: {0} deve conter uma quantidade de {1} caracteres.</value>
   </data>
   <data name="ArquivoImpDeveConterExtensaoTXT" xml:space="preserve">
-    <value>O arquivo importado deve conter a etensão .txt</value>
+    <value>O arquivo importado deve conter a extensão .txt</value>
   </data>
   <data name="ArquivoImpSemInfo" xml:space="preserve">
     <value>O arquivo importado encontra-se vazio.</value>

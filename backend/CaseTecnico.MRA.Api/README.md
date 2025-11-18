@@ -1,5 +1,5 @@
-﻿==============================================
-           📝 ARQUITETURA
+﻿===============================================
+           📝 ARQUITETURA GERAL
 ==============================================
 
 [API]
@@ -57,4 +57,3 @@
    +--> [IoC] ---> conecta [Application] com [Infrastructure] e [CrossCutting]
 
 [Infrastructure] ---> [Domain], [CrossCutting]
-

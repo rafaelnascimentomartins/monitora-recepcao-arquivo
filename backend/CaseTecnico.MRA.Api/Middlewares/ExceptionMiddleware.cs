@@ -1,10 +1,7 @@
 ﻿using CaseTecnico.MRA.Domain.Entities;
 using CaseTecnico.MRA.Domain.Interfaces.Repositories;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using System.Net;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace CaseTecnico.MRA.Api.Middlewares;
 
