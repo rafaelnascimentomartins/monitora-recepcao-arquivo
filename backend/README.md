@@ -25,15 +25,15 @@ Pode ser realizado o download do projeto de forma manual ou clonando com git `(R
 
 -> Baixar o git se necessário em: https://git-scm.com/install/windows
 -> Abrir a pasta necessária no Bash ou CMD 
--> Executar o comando: `git clone https://github.com/rafaelnascimentomartins/monitora-recepcao-arquivo-backend.git`
+-> Executar o comando: `git clone https://github.com/rafaelnascimentomartins/monitora-recepcao-arquivo.git`
 
 ## Sobre as branches?
 
 O projeto possui um histórico de uso das branches, não foram deletadas, mas foram mergiadas para branch principal `master`.
 
-Utilizar a branch `master` que já possui toda a alteração final.
+Utilizar a branch `main` que já possui toda a alteração final.
 
-## Clonei o projeto e estou na branch master, como executo o projeto localmentem sem Docker?
+## Clonei o projeto e quero executar o projeto localmente (debug) sem Docker?
 
 1) Abrir o projeto via plataforma Visual Studio 2022
 2) Abrir o arquivo appsettings.json dentro do projeto `Api`
@@ -46,15 +46,7 @@ Utilizar a branch `master` que já possui toda a alteração final.
 4) Clicar no botão `play` do Visual Studio 2022, selecione o arquivo appseetings que deseja executar: (localhost, development ou staging)
 	OBS: localhost executa o appsettings.json principal. 
 	
-## Clonei o projeto e estou na branch master, como executo o projeto via Docker?
-
-1) Abra o terminal CMD ou Powershell
-2) Execute o comando: `docker ps`, será listado todos os containers e imagens ativas em sua máquina
-OBS1: Todas as informações de análise de container, parar, iniciar e etc... pode ser feita pelo Docker Desktop também na aba containers.
-OBS2: Lembre-se de parar/excluir os containers no final da análise do projeto.
-	Parar container: `docker pause NOME_CONTAINER`
-
-### Quero executar o projeto localmente, mas o banco de dados em container
+##  Clonei o projeto e quero executar o projeto localmente (debug), mas o banco de dados em container
 
 1) Execute o comando `docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=MRASenhaCT#181125" -p 1433:1433 --name sqlserver -d mcr.microsoft.com/mssql/server:2022-latest`
 	Explicações:
@@ -70,7 +62,14 @@ OBS2: Lembre-se de parar/excluir os containers no final da análise do projeto.
 2) Execute o comando: `docker ps` para verificar se o container com a imagem foi gerada ou abra o Docker Desktop.
 3) Para finalizar verificar a explicação: `Clonei o projeto e estou na branch master, como executo o projeto localmentem sem Docker?`
 
+## Clonei e quero executar via Docker compose
 
-### Quero executar o projeto localmente, mas tudo em container
+Neste caso não precisa do Node instalado na máquina.
 
-AQUI VEM A BUCHA
+Observe a documentação do README.md em: https://github.com/rafaelnascimentomartins/monitora-recepcao-arquivo.
+
+
+## OBSERVAÇÕES GERAIS
+
+O projeto possui um documento README.md explicando sobre o projeto em si, este README.md
+é apenas para mostrar o processo como todo para execução do projeto

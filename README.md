@@ -26,6 +26,23 @@ Execute o download do Docker em sua máquina local e siga os passos abaixo:
 3) Para parar o Docker e seus containers: `docker compose down`
 4) Para parar e remover redes/volumes base: `docker compose down --volumes`
 5) Para observar os logs: `docker compose logs -f`
+6) Caso tenha executado o item 3 (down) e queira realizar a subida novamente
+executar: `docker compose up -d` 
+OBS: Se executar o down item 3, para executar novamente
 
 
 Observe a documentação do README.md em: https://github.com/rafaelnascimentomartins/monitora-recepcao-arquivo.
+
+## Anotações sobre processos CLOUD
+
+Minhas observações do que poderia ficar na nuvem.
+
+Azure Key Vault
+
+-> Para armazenamento das chaves connections strings e criptografias.
+
+Azure Blob
+
+-> Para armazenamento dos arquivos em backup, de acordo com a plataforma seria
+interessante a camada de armazenamento: Cool/Archive, acredito que não necessite acessar 
+o arquivo sempre, até porque o conteúdo esta nas tabelas no campo: EstruturaImportacao
