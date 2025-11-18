@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ArquivoService } from '../../services/arquivo.service';
+import { ArquivoService } from '../../../arquivo/services/arquivo.service';
 import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ChartPieComponent } from '../../../../shared/components/charts/chart-pie/chart-pie.component';
 import { DividerModule } from 'primeng/divider';
-import { ChartPieItem } from '../../../../core/interfaces/chart-pie-item.interface';
+import { ChartPieItem } from '../../../../shared/interfaces/chart-pie-item.interface';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
 import { RoutesEnum } from '../../../../core/enums/routes.enum';

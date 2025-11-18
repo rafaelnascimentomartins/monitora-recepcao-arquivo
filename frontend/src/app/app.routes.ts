@@ -5,7 +5,7 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./core/layout/layout.component').then((m) => m.LayoutComponent),
+      import('./shared/layout/layout.component').then((m) => m.LayoutComponent),
       children: [
         { path: '', redirectTo: RoutesEnum.HOME, pathMatch: 'full' },
         {
@@ -26,7 +26,7 @@ export const routes: Routes = [
           path: RoutesEnum.DASHBOARDS_ARQUIVO,
           loadComponent: () =>
             import(
-              './modules/arquivo/pages/dashboard-resumo-status/dashboard-resumo-status.component'
+              './modules/dashboard/pages/dashboard-resumo-status/dashboard-resumo-status.component'
             ).then((m) => m.DashboardResumoStatusComponent),
         }
     ],

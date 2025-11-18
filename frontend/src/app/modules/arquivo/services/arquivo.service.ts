@@ -9,7 +9,7 @@ import { GetArquivoRecepcionadoDatatableDto } from "../models/dtos/get-arquivo-r
 import { GetArquivoRecepcionadoDatatableResponse } from "../models/responses/get-arquivo-recepcionado-datatable-response";
 import { GetArquivoNaoRecepcionadoDatatableRequest } from "../models/requests/get-arquivo-nao-recepcionado-datatable-request";
 import { GetArquivoNaoRecepcionadoDatatableResponse } from "../models/responses/get-arquivo-nao-recepcionado-datatable-response";
-import { GetDashArquivoResumoStatusResponse } from "../models/responses/get-dash-arquivo-resumo-status-response";
+import { GetDashArquivoResumoStatusResponse } from "../../dashboard/models/responses/get-dash-arquivo-resumo-status-response";
 
 @Injectable({
   providedIn: 'root' // ou omitido se você quiser scoped service na feature

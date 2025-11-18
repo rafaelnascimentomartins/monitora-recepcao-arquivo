@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { MenubarModule } from 'primeng/menubar';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { RoutesEnum } from '../enums/routes.enum';
+import { RoutesEnum } from '../../core/enums/routes.enum';
 import { MenuItem } from 'primeng/api';
 
 @Component({

@@ -1,0 +1,30 @@
+{
+  "overrides": [
+    {
+      "files": ["src/app/core/**/*.ts"],
+      "rules": {
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "ClassDeclaration[decorators.0.expression.callee.name='Component']",
+            "message": "Não é permitido criar Component no Core"
+          },
+          {
+            "selector": "ClassDeclaration[decorators.0.expression.callee.name='Directive']",
+            "message": "Não é permitido criar Directive no Core"
+          },
+          {
+            "selector": "ClassDeclaration[decorators.0.expression.callee.name='Pipe']",
+            "message": "Não é permitido criar Pipe no Core"
+          }
+        ],
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["*component*", "*components*"]
+          }
+        ]
+      }
+    }
+  ]
+}

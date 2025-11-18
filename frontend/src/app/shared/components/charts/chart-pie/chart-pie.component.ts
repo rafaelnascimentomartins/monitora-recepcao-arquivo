@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } f
 import { BadgeModule } from 'primeng/badge';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
-import { ChartPieItem } from '../../../../core/interfaces/chart-pie-item.interface';
+import { ChartPieItem } from '../../../interfaces/chart-pie-item.interface';
 
 @Component({
   selector: 'app-chart-pie',

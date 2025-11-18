@@ -62,3 +62,8 @@ Neste caso será necessário ter o Node instalado.
 Neste caso não precisa do Node instalado na máquina.
 
 Observe a documentação do README.md em: https://github.com/rafaelnascimentomartins/monitora-recepcao-arquivo.
+
+# OBSERVAÇÕES GERAIS
+
+O projeto possui um documento README.md explicando sobre o projeto em si, este README.md
+é apenas para mostrar o processo como todo para execução do projeto
