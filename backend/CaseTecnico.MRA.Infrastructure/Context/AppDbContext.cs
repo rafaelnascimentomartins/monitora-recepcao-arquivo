@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CaseTecnico.MRA.Infrastructure.Context;
 
-public sealed class AppDbContext : DbContext
+public sealed class AppDbContext : DbContext, IAppDbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)

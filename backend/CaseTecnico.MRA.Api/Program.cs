@@ -115,11 +115,11 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "MRA API V1");
     c.RoutePrefix = "swagger";  //ALTERANDO PARA ROTA: swagger, POR CONTA DA VALIDAÇÃO DE ACESSO.
 });
-// app.MapOpenApi();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+//MIDDLEWARE PARA LOGS GLOBAIS DE EXCEÇÃO
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("AllowedOriginsCors");
 app.Run();

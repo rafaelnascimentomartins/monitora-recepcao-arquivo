@@ -79,7 +79,7 @@ namespace CaseTecnico.MRA.Application.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O arquivo importado deve conter a etensão .txt.
+        ///   Looks up a localized string similar to O arquivo importado deve conter a extensão .txt.
         /// </summary>
         internal static string ArquivoImpDeveConterExtensaoTXT {
             get {

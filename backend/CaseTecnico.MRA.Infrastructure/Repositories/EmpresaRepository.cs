@@ -8,7 +8,7 @@ namespace CaseTecnico.MRA.Infrastructure.Repositories;
 
 public class EmpresaRepository : BaseRepository<Empresa>, IEmpresaRepository
 {
-    public EmpresaRepository(AppDbContext context)
+    public EmpresaRepository(IAppDbContext context)
            : base(context)
     {
     }

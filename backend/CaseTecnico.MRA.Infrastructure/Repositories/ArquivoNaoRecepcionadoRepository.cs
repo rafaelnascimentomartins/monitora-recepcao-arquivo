@@ -10,7 +10,7 @@ namespace CaseTecnico.MRA.Infrastructure.Repositories;
 
 public class ArquivoNaoRecepcionadoRepository : BaseRepository<ArquivoNaoRecepcionado>, IArquivoNaoRecepcionadoRepository
 {
-    public ArquivoNaoRecepcionadoRepository(AppDbContext context)
+    public ArquivoNaoRecepcionadoRepository(IAppDbContext context)
            : base(context)
     {
     }

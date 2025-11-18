@@ -11,7 +11,7 @@ namespace CaseTecnico.MRA.Infrastructure.Repositories;
 
 public class ArquivoRecepcionadoRepository : BaseRepository<ArquivoRecepcionado>, IArquivoRecepcionadoRepository
 {
-    public ArquivoRecepcionadoRepository(AppDbContext context)
+    public ArquivoRecepcionadoRepository(IAppDbContext context)
            : base(context)
     {
     }
@@ -26,7 +26,7 @@ public class ArquivoRecepcionadoRepository : BaseRepository<ArquivoRecepcionado>
         var totalRecords = await query.CountAsync(cancellationToken);
 
         // ORDERNAÇÃO(dinâmica)
-        if (filter.SortField?.ToLower() == "empresadescricao")
+        if (filter.SortField != null && filter.SortField?.ToLower() == "empresadescricao")
             filter.SortField = "EmpresaId";
 
         query = query.ApplySorting(filter.SortField, filter.SortDirection);
