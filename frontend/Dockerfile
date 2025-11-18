@@ -29,7 +29,7 @@ RUN npm run build
 # =========================
 
 # Usa o NGINX como servidor web para entregar os arquivos estáticos
-FROM nginx:latest AS final
+FROM nginx:alpine AS final
 
 # Remove o conteúdo padrão do NGINX
 # (Ele vem com uma página index.html padrão, que não queremos)
@@ -38,7 +38,7 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copia o conteúdo buildado no Stage 1 para a pasta que o NGINX serve
 # O Angular gera dentro de /dist/NOME_DO_PROJETO, mas ao usar
 # COPY /app/dist /usr/share/nginx/html ele copia tudo direto
-COPY --from=build /app/dist/monitora-recepcao-arquivo-frontend/browser /usr/share/nginx/html
+COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
 
 # Copia a configuração do NGINX para dentro do container
 COPY default.conf /etc/nginx/conf.d/default.conf
