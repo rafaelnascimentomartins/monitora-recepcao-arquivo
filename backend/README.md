@@ -9,6 +9,8 @@ Especificação Técnica:
 Objetivo:
 Case Técnico.
 
+Swagger rota -> localhost:5163/swagger
+
 ## O que eu preciso para iniciar projeto localmente?
 
 1) Visual Studio 2022
