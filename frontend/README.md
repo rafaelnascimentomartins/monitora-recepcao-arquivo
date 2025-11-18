@@ -37,12 +37,12 @@ Pode ser realizado o download do projeto de forma manual ou clonando com git `(R
 
 -> Baixar o git se necessário em: https://git-scm.com/install/windows
 -> Abrir a pasta necessária no Bash ou CMD 
--> Executar o comando: `git clone https://github.com/rafaelnascimentomartins/monitora-recepcao-arquivo-frontend.git`
+-> Executar o comando: `git clone https://github.com/rafaelnascimentomartins/monitora-recepcao-arquivo.git`
 
 ## Sobre as branches?
 
 O projeto possui um histórico de uso das branches, mas foram mergiadas para 
-branch principal `master`, esse histórico pode ser analisado em: 
+branch principal `main`, esse histórico pode ser analisado em: 
 GitHub -> Code<> -> Commits.
 
 ## Clonei o projeto e quero executar localmente sem Docker
