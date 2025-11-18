@@ -7,49 +7,49 @@ namespace CaseTecnico.MRA.Infrastructure.Services;
 
 public class FileEncryptionService : IFileEncryptionService
 {
-    public async Task SaveEncryptedAsync(Stream fileStream, string destinationFileName, string password)
+    public async Task SaveEncryptedAsync(
+        Stream fileStream, 
+        string originalFileName, 
+        string password,
+        string backendRootPath)
     {
-        // Obtém a pasta atual do projeto (bin/Debug/netX)
-        var projectRoot = Directory.GetCurrentDirectory();
+        // Caminho da pasta UploadsArquivos dentro do backend
+        var uploadsDir = Path.Combine(backendRootPath, "UploadsArquivos");
 
-        // Define a pasta de uploads
-        var uploadsDir = Path.Combine(projectRoot, "Uploads");
-
-        // Cria a pasta se não existir
         if (!Directory.Exists(uploadsDir))
             Directory.CreateDirectory(uploadsDir);
 
-        // Gera um arquivo temporário dentro da pasta Uploads
-        var tempFilePath = Path.Combine(uploadsDir, Path.GetRandomFileName());
+        // Extrai nome e extensão do arquivo enviado
+        var fileNameWithoutExt = Path.GetFileNameWithoutExtension(originalFileName);
+        var ext = Path.GetExtension(originalFileName);
 
-        // Salva o Stream temporariamente
-        using (var tempFile = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write))
-        {
-            await fileStream.CopyToAsync(tempFile);
-        }
+        // Nome final com ticks
+        var finalFileName = $"{fileNameWithoutExt}-{DateTime.UtcNow.Ticks}{ext}";
 
-        // Define o caminho final do arquivo criptografado
-        var destinationPath = Path.Combine(uploadsDir, destinationFileName);
+        var finalPath = Path.Combine(uploadsDir, finalFileName);
 
-        // Criptografa e salva no destino final
-        EncryptFile(tempFilePath, destinationPath, password);
-
-        // Remove o arquivo temporário
-        File.Delete(tempFilePath);
+        // Criptografar diretamente o Stream → sem arquivo temporário
+        await EncryptStreamToFileAsync(fileStream, finalPath, password);
     }
 
-    private void EncryptFile(string inputFile, string outputFile, string password)
+    private async Task EncryptStreamToFileAsync(Stream input, string outputFile, string password)
     {
         using var aes = Aes.Create();
-        var key = new Rfc2898DeriveBytes(password, Encoding.UTF8.GetBytes("Salt1234!@#$"), 10000);
+
+        var key = new Rfc2898DeriveBytes(
+            Encoding.UTF8.GetBytes(password),
+            Encoding.UTF8.GetBytes("Salt1234!@#$"),
+            10000,
+            HashAlgorithmName.SHA256
+        );
+
         aes.Key = key.GetBytes(32);
         aes.IV = key.GetBytes(16);
 
         using var fsOutput = new FileStream(outputFile, FileMode.Create);
         using var cryptoStream = new CryptoStream(fsOutput, aes.CreateEncryptor(), CryptoStreamMode.Write);
-        using var fsInput = new FileStream(inputFile, FileMode.Open);
 
-        fsInput.CopyTo(cryptoStream);
+        input.Position = 0; // Garantir início
+        await input.CopyToAsync(cryptoStream);
     }
-
 }
