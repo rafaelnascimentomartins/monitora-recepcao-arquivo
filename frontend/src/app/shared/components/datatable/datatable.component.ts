@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ContentChildren, EventEmitter, Input, Output, QueryList, TemplateRef } from '@angular/core';
 import { TableLazyLoadEvent, TableModule, TablePageEvent } from 'primeng/table';
-import { DatatableLazy } from '../../../core/interfaces/datatable-lazy.interface';
+import { DatatableLazy } from '../../interfaces/datatable-lazy.interface';
 import { PaginatorModule } from 'primeng/paginator';
 import { ButtonModule } from 'primeng/button';
-import { DatatableColumn, TagSeverity } from '../../../core/models/datatable-column.model';
+import { DatatableColumn, TagSeverity } from '../../models/datatable-column.model';
 import { TagModule } from 'primeng/tag';
 
 @Component({
